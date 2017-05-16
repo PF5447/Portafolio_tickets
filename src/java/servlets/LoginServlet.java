@@ -6,6 +6,7 @@
 package servlets;
 
 import controller.FuncionarioController;
+import controller.PerfilController;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -47,6 +48,8 @@ public class LoginServlet extends HttpServlet {
             String nombre = request.getParameter("login_usuario");
             String pass = request.getParameter("login_pasword");
             
+            PerfilController perfiles = new PerfilController();
+            
 out.println("<!DOCTYPE html>");
 out.println("<html>");
 out.println("<head>");
@@ -70,7 +73,7 @@ out.println("		<div class='container'>");
 out.println("			<div class='form-group'>");
 out.println("				<p>Rut</p>");
 out.println("				<input type='text' name='rut_administrador'>");
-out.println("				<input type='button' name='boton_verificacion' value='Verificar Disponibilidad'>");
+out.println("				<input type='button' name='boton_verificacion' onclick='alert(\"hola\")' value='Verificar Disponibilidad'>");
 out.println("			</div>");
 out.println("			<div class='form-group'>");
 out.println("				<p>Nombre</p>");
@@ -79,7 +82,10 @@ out.println("			</div>");
 out.println("			<div class='form-group'>");
 out.println("				<p>Perfil</p>");
 out.println("				<select>");
-out.println("					<option>Traer de Tabla Perfiles</option>");
+for(String aux : perfiles.traerTurnos()){
+out.println("					<option>"+aux+"</option>");
+}
+
 out.println("				</select>");
 out.println("			</div>");
 out.println("			<div class='form-group'>");

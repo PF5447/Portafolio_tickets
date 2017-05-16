@@ -31,7 +31,7 @@ public class TotemServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            out.println("<!DOCTYPE html>");
+out.println("<!DOCTYPE html>");
 out.println("<html>");
 out.println("<head>");
 out.println("	<meta charset='utf-8'>");
