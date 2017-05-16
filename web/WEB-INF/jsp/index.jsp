@@ -24,7 +24,7 @@
 	<div id=login>
 	<fieldset>
 		<legend>Login</legend>
-                <form id=formulario method="post" action="./loginServlet">
+                <form id=formulario method="post" action="./LoginServlet">
 			<div id="entradas_formulario">
 				
 				<div class="form-group">

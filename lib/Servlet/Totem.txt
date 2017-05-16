@@ -1,0 +1,36 @@
+out.println('<!DOCTYPE html>');
+out.println('<html>');
+out.println('<head>');
+out.println("	<meta charset='utf-8'>");
+out.println("	<script type='text/javascript' src=''></script>");
+out.println("	<meta name='viewport' content='width=device-width, user-scalable=no, initial-scale=1.0, maximun-scale=1.0, minimun-scale=1.0' >");
+
+
+out.println("	<link href='css/bootstrap.min.css' rel='stylesheet'>");
+out.println("	<title>Ticket Pro</title>");
+out.println('</head>');
+out.println('<body>');
+
+out.println("	<div class='container'>");
+
+out.println("	<div id=titulo>");
+out.println("		<h1>Totem Mode</h1>");
+out.println("		<hr>");
+out.println("	</div>");
+out.println("		<div class='form-group'>");
+out.println("			Identificador<br>");
+out.println("			<input type='text' name='Identificador'>");
+out.println("		</div>");
+out.println("		<hr>");
+out.println("		<a href='index.html'>Modo administrador</a>");
+out.println("	</div>");
+
+
+out.println("	<script src='js/jquery.js'></script>");
+out.println("	<script src='js/bootstrap.min.js'></script>");
+
+out.println('</body>');
+out.println('<footer>');
+
+out.println('</footer>');
+out.println('</html>');

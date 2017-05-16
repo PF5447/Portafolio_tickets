@@ -47,57 +47,126 @@ public class LoginServlet extends HttpServlet {
             String nombre = request.getParameter("login_usuario");
             String pass = request.getParameter("login_pasword");
             
-            
-            
-            
-            
-            
-            if (true) {
-            
-                out.println("<!DOCTYPE html>");
-                out.println("<html>");
-                out.println("<head>");
-                out.println("<title>Servlet LoginServlet</title>");            
-                out.println("</head>");
-                out.println("<body>");
-                out.println("<h1>Bienvenido a  La Página de Administracion</h1>");
-                out.println("<form action='./RegistroServlet' method='POST'>");
-                out.println("Nombre<input type='text'name='nombre'/><br/>");
-                out.println("Apellido<input type='text'name='apellido'/><br/>");
-                out.println("Contrasena<input type='text'name='contrasena'/><br/>");
-                out.println("Cargo<input type='text'name='cargo'/><br/>");
-                out.println("Estado<input type='text'name='estado'/><br/>");
-                out.println("Perfil<input type='text'name='perfil'/>");
-                out.println("<input type='submit' value='Aceptar'/>");
-                out.println("</form>");
-                out.println("</body>");
-                out.println("</html>");
-            }else if(true){
-                out.println("<!DOCTYPE html>");
-                out.println("<html>");
-                out.println("<head>");
-                out.println("<title>Servlet LoginServlet</title>");            
-                out.println("</head>");
-                out.println("<body>");
-                out.println("<h1>Pagina Clasica</h1>");
-                out.println("</body>");
-                out.println("</html>");
-            
-            }else{
-                out.println("<!DOCTYPE html>");
-                out.println("<html>");
-                out.println("<head>");
-                out.println("<title>Servlet LoginServlet</title>");            
-                out.println("</head>");
-                out.println("<body>");
-                out.println("<h1>Redireccionar...</h1>");
-                out.println("</body>");
-                out.println("</html>");
-            }
-            
-            
-            
-            
+out.println("<!DOCTYPE html>");
+out.println("<html>");
+out.println("<head>");
+out.println("	<meta charset='utf-8'>");
+out.println("	<script type='text/javascript' src=''></script>");
+out.println("	<meta name='viewport' content='width=device-width, user-scalable=no, initial-scale=1.0, maximun-scale=1.0, minimun-scale=1.0' >");
+out.println("	<link href='css/bootstrap.min.css' rel='stylesheet'>");
+out.println("	<title>Ticket Pro</title>");
+out.println("</head>");
+out.println("<body>");
+out.println("	<div class='container'>");
+out.println("	<div id=titulo>");
+out.println("		<h1>Portal de Administración</h1>");
+out.println("		<a href='./TotemServlet'>Activar Modo Totem</a>");
+out.println("		<br>");
+out.println("		<a href='./AdministracionAvanzadaServlet'>Administracion Avanzada</a>");
+out.println("	</div>");
+out.println("		<hr>");
+out.println("		<h2>Gestion de funcionarios</h2>");
+out.println("		<div class='container'>");
+out.println("			<div class='form-group'>");
+out.println("				<p>Rut</p>");
+out.println("				<input type='text' name='rut_administrador'>");
+out.println("				<input type='button' name='boton_verificacion' value='Verificar Disponibilidad'>");
+out.println("			</div>");
+out.println("			<div class='form-group'>");
+out.println("				<p>Nombre</p>");
+out.println("				<input type='text' name='nombre_administrador'>");
+out.println("			</div>");
+out.println("			<div class='form-group'>");
+out.println("				<p>Perfil</p>");
+out.println("				<select>");
+out.println("					<option>Traer de Tabla Perfiles</option>");
+out.println("				</select>");
+out.println("			</div>");
+out.println("			<div class='form-group'>");
+out.println("				<p>Turno</p>");
+out.println("				<select>");
+out.println("					<option>Traer de tabla turno</option>");
+out.println("				</select>");
+out.println("			</div>");
+out.println("			<div class='form-group'>");
+out.println("				<p>Sexo</p>");
+out.println("				<select>");
+out.println("					<option>Masculino</option>");
+out.println("					<option>Femenino</option>");
+out.println("				</select>");
+out.println("			</div>");
+out.println("			<div class='form-group'>");
+out.println("				<p>Correo</p>");
+out.println("				<input type='email' name='email_administrador'>");
+out.println("			</div>");
+out.println("			<div class='form-group'>");
+out.println("				<p>Cargo</p>");
+out.println("				<input type='text' name='cargo_administrador'>");
+out.println("			</div>");
+out.println("			<div class='form-group'>");
+out.println("				<p>Serie para colacion (id funcionario)</p>");
+out.println("				<input type='text' name='nombre_administrador'>");
+out.println("			</div>");
+out.println("			<div class='form-group'>");
+out.println("				'");
+out.println("				<input class='btn btn-primary' type='button' name='boton_guardar' value='Guardar'>");
+out.println("				<input class='btn btn-warning' type='button' name='boton_guardar' value='Modificar'>");
+out.println("				<input class='btn btn-danger' type='button' name='boton_guardar' value='Eliminar'>");
+out.println("			</div>");
+out.println("		</div>");
+out.println("		<hr>");
+out.println("		<h2>Gestion de Usuario</h2>");
+out.println("		<p class='text-muted'>Solo para creación de administradores y cajeros</p>");
+out.println("		<hr>");
+out.println("		<div class='container'>");
+out.println("			<div class='form-group'>");
+out.println("				<p>Id funcionario</p>");
+out.println("				<input type='text' name='rut_administrador_user'>");
+out.println("				<input type='button' name='boton_verificacion' value='Verificar Funcionario'>");
+out.println("			</div>");
+out.println("			<div class='form-group'>");
+out.println("				<p>User</p>");
+out.println("				<input type='text' name='rut_administrador'>");
+out.println("			</div>");
+out.println("			<div class='form-group'>");
+out.println("				<p>Contraseña</p>");
+out.println("				<input type='password' name='nombre_administrador_usuario'>");
+out.println("			</div>");
+out.println("			<div class='form-group'>");
+out.println("				<p>Repita contraseña</p>");
+out.println("				<input type='password' name='pass_administrador_usuario'>");
+out.println("			</div>");
+out.println("			<div class='form-group'>");
+out.println("				<p>Codigo Salt</p>");
+out.println("				<input type='password' name='pass_administrador_usuario'>");
+out.println("			</div>");
+out.println("			<div class='form-group'>");
+out.println("				<p>Estado</p>");
+out.println("				<p class='text-muted'>Al momento de bloquear un usuario deshabilita al funcionario</p>");
+out.println("				<select name='select_administrador_estado_user'>");
+out.println("					<option>Bloqueado</option>");
+out.println("					<option>Desbloqueado</option>");
+out.println("				</select>");
+out.println("			</div>");
+out.println("			<input class='btn btn-primary' type='button' name='boton_administracion_crear_user' value='Crear Usuario'>");
+out.println("			<input class='btn btn-warning' type='button' name='boton_administracion_modificar_user' value='Modificar Usuario'>");
+out.println("			<input class='btn btn-danger' type='button' name='boton_administracion_eliminar_user' value='Eliminar Usuario'>");
+out.println("			<hr>");
+out.println("		</div>");
+out.println("	</div>");
+out.println("	<script src='js/jquery.js'></script>");
+out.println("	<script src='js/bootstrap.min.js'></script>");
+out.println("</body>");
+out.println("<footer>");
+out.println("</footer>");
+out.println("</html>");
+
+
+
+
+
+
+    
         }
     }
 

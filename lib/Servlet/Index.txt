@@ -1,0 +1,49 @@
+out.println("<!DOCTYPE html>");
+out.println("<html>");
+out.println("<head>");
+"out.println(""	<meta charset=""utf-8"">"");"
+"out.println(""	<script type=""text/javascript"" src=""""></script>"");"
+"out.println(""	<meta name=""viewport"" content=""width=device-width, user-scalable=no, initial-scale=1.0, maximun-scale=1.0, minimun-scale=1.0"" >"");"
+out.println("");
+out.println("");
+"out.println(""	<link href=""css/bootstrap.min.css"" rel=""stylesheet"">"");"
+"out.println(""	<title>Ticket Pro</title>"");"
+out.println("</head>");
+out.println("<body>");
+"out.println(""	<div class=""container"">"");"
+"out.println(""	<div id=titulo>"");"
+"out.println(""		<h1>Ticket Pro</h1>"");"
+"out.println(""		"");"
+"out.println(""	</div>"");"
+"out.println(""	<div id=login>"");"
+"out.println(""	<fieldset>"");"
+"out.println(""		<legend>Login</legend>"");"
+"out.println(""		<form id=formulario>"");"
+"out.println(""			<div id=""entradas_formulario"">"");"
+"out.println(""				"");"
+"out.println(""				<div class=""form-group"">"");"
+"out.println(""					<p>Nombre Usuario</p>"");"
+"out.println(""					<input class=""form-control"" type=""text"" name=""nombre_usuario"" maxlength=""50"">"");"
+"out.println(""				</div>"");"
+"out.println(""				"");"
+"out.println(""				<div class=""form-group"">"");"
+"out.println(""					<p>Contraseña</p>"");"
+"out.println(""					<input class=""form-control"" type=""password"" name=""password_usuario"" maxlength=""50"">"");"
+"out.println(""				</div>"");"
+out.println("");
+"out.println(""			</div>"");"
+"out.println(""			<div cals=""form-group"">"");"
+"out.println(""				<input class=""btn btn-primary"" type=""submit"" name=""submit_formulario"" value=""Ingresar"">"");"
+"out.println(""				<input class=""btn btn-primary"" type=""button"" name=""button_formulario"" value=""Limpiar"">"");"
+"out.println(""			</div>"");"
+"out.println(""		</form>"");"
+"out.println(""	</fieldset>"");"
+"out.println(""	</div>"");"
+"out.println(""	</div>"");"
+"out.println(""	<script src=""js/jquery.js""></script>"");"
+"out.println(""	<script src=""js/bootstrap.min.js""></script>"");"
+out.println("</body>");
+out.println("<footer>");
+"out.println(""	"");"
+out.println("</footer>");
+out.println("</html>");

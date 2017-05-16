@@ -15,7 +15,4 @@
       </property>
     </properties>
   </jdbc-driver-params>
-  <jdbc-data-source-params>
-    <jndi-name>Entidad.Usuario</jndi-name>
-  </jdbc-data-source-params>
 </jdbc-data-source>
