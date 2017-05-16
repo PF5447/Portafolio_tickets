@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<script type="text/javascript" src=""></script>
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximun-scale=1.0, minimun-scale=1.0" >
+
+
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<title>Ticket Pro</title>
+</head>
+<body>
+	
+	<div class="container">
+	
+	<div id=titulo>
+		<h1>Administracion Avanzada</h1>
+		<a href="administracion.html">Volver</a>
+	</div>
+		<hr>
+		<h2>Gestion de Perfiles</h2>
+		<div class="container">
+
+			<div class="form-group">
+				<p>Id Perfil</p>
+				<input type="text" name="rut_administrador">
+				<input type="button" name="boton_verificacion_perfil" value="Verificar Disponibilidad">
+			</div>
+
+
+
+			<div class="form-group">
+				<p>Nombre Perfil</p>
+				<input type="text" name="nombre_administrador_perfil">
+			</div>
+		
+			
+			<div class="form-group">
+				
+				<input class="btn btn-primary" type="button" name="boton_administracion_avanzada_crear_perfil" value="Guardar">
+				<input class="btn btn-warning" type="button" name="boton_administracion_avanzada_modificar_perfil" value="Modificar">
+				<input class="btn btn-danger" type="button" name="boton_administracion_avanzada_eliminar_perfil" value="Eliminar">
+			</div>
+
+		</div>
+
+
+		<hr>
+		<h2>Gestion de Turnos</h2>
+		<hr>
+		<div class="container">
+			
+			<div class="form-group">
+				<p>Id turno</p>
+				<input type="text" name="id_administrador_turno">
+				<input type="button" name="boton_verificacion" value="Verificar Funcionario">
+			</div>
+
+			<div class="form-group">
+				<p>Nombre Turno</p>
+				<input type="text" name="nombre_administrador_turno">
+			</div>
+			<p class="text-muted">Para ingresar el Tiempo en un correcto formato debe usar Google Chrome.</p>
+			<div class="form-group">
+				<p>Hora inicio</p>
+				<input type="time" name="time_administrador_turno_inicio">
+			</div>
+
+			<div class="form-group">
+				<p>Hora fin</p>
+				<input type="time" name="time_administrador_turno_fin">
+			</div>
+
+			<div class="containter">
+			<input class="btn btn-primary" type="button" name="boton_administracion_crear_turnos" value="Crear Turno">
+
+			<input class="btn btn-warning" type="button" name="boton_administracion_modificar_turnos" value="Modificar Turno">
+
+			<input class="btn btn-danger" type="button" name="boton_administracion_eliminar_turnos" value="Eliminar Turno">
+			</div>
+			<hr>
+
+		</div>
+		
+		<h2>Gestion de Servicios</h2>
+		<hr>
+		<div class="container">
+			
+			<div class="form-group">
+				<p>Id Servicio</p>
+				<input type="text" name="id_servicio">
+				<input type="button" name="boton_verificacion" value="Verificar Funcionario">
+			</div>
+
+			<div class="form-group">
+				<p>Nombre Servicio</p>
+				<input type="text" name="nombre_servicio">
+			</div>
+			<p class="text-muted">Para ingresar el Tiempo en un correcto formato debe usar Google Chrome.</p>
+			<div class="form-group">
+				<p>Hora inicio</p>
+				<input type="time" name="time_administrador_servicio_inicio">
+			</div>
+
+			<div class="form-group">
+				<p>Hora fin</p>
+				<input type="time" name="time_administrador_servicio_fin">
+			</div>
+
+			<div class="containter">
+			<input class="btn btn-primary" type="button" name="boton_administracion_crear_servicio" value="Crear Servicio">
+
+			<input class="btn btn-warning" type="button" name="boton_administracion_modificar_servicio" value="Modificar Servicio">
+
+			<input class="btn btn-danger" type="button" name="boton_administracion_eliminar_servicio" value="Eliminar Servicio">
+			</div>
+			<hr>
+
+		</div>
+
+		<h2>Gestion de Tickets</h2>
+		<hr>
+		<div class="container">
+			
+			<div class="form-group">
+				<p>Id Servicio</p>
+				<input type="number" name="qty_tickets">
+				<input type="button" name="boton_verificacion" value="Generar Tickets">
+			</div>
+
+			<div class="form-group">
+				<p>Asignar Vale</p>
+				<p class="text-muted">Ingresar id de Funcionario</p>
+				<input type="text" name="nombre_servicio">
+			</div>
+
+			<div class="form-group">
+				<p>Creado por:</p>
+				<p class="text-muted">Traer dato desde la sesion(id funcionario)</p>
+				<input type="text" name="nombre_servicio">
+			</div>
+
+			<p>Estado</p>
+			<div class="form-group">
+				<select name="select_administrador_estado_user">
+					<option>Cobrado</option>
+					<option>Sin cobrar</option>
+				</select>
+			</div>
+
+			<div class="form-group">
+				<p>Bloqueado por:</p>
+				<p class="text-muted">Id de quien hizo el bloqueo</p>
+				<input type="text" name="nombre_servicio">
+			</div>
+
+			<div class="form-group">
+				<p>Fecha de Bloqueo:</p>
+				<p class="text-muted">Trae la Fecha de bloqueo, ojo bloqueo</p>
+				<input type="text" name="nombre_servicio">
+			</div>
+
+			<div class="form-group">
+				<p>Detalles de Bloqueo:</p>
+				<input type="text" name="nombre_servicio">
+			</div>
+
+			<p>Tipo Ticket</p>
+				<select class="form-group" name="select_administrador_estado_user">
+					<option>Normal</option>
+					<option>Especial Visitas</option>
+					<option>Adicional</option>
+				</select>
+			</div>
+
+			<div class="form-group">
+				<p>Detalles de Especiales:</p>
+				<p class="text-muted">Solo si se emitira un vale especial</p>
+				<input type="text" name="nombre_servicio">
+			</div>
+
+			<div class="form-group">
+				<p>Detalles de Adicional:</p>
+				<p class="text-muted">Solo si se emitira un vale Adicional</p>
+				<input type="text" name="nombre_servicio">
+			</div>
+
+			<div class="form-group">
+				<p>Valor de tickets:</p>
+				<input type="numbrer" name="nombre_servicio">
+			</div>
+			
+			<input class="btn btn-primary" type="button" name="boton_administracion_crear_servicio" value="Crear Servicio">
+
+			<input class="btn btn-warning" type="button" name="boton_administracion_modificar_servicio" value="Modificar Servicio">
+
+			<input class="btn btn-danger" type="button" name="boton_administracion_eliminar_servicio" value="Eliminar Servicio">
+		
+
+		</div>
+
+	</div>
+
+	<script src="js/jquery.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+
+</body>
+<footer>
+	
+</footer>
+</html>
