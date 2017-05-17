@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jdbc-data-source xmlns="http://xmlns.oracle.com/weblogic/jdbc-data-source">
-    <jdbc-driver-params>
+  <name>ticket</name>
+  <jdbc-driver-params>
     <url>jdbc:oracle:thin:@localhost:1521:XE</url>
     <driver-name>oracle.jdbc.OracleDriver</driver-name>
     <properties>
@@ -14,4 +15,7 @@
       </property>
     </properties>
   </jdbc-driver-params>
+  <jdbc-data-source-params>
+    <jndi-name>ticket</jndi-name>
+  </jdbc-data-source-params>
 </jdbc-data-source>

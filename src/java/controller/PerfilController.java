@@ -11,7 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import model.Turnos;
+
 
 /**
  *
@@ -27,18 +27,20 @@ public class PerfilController {
         
         
         try {
+            Connection con = conexion.getConnection();
+            Statement stms = con.createStatement();
+                    
             
-            Connection nueva_conexion = conexion.getConnection();
-            Statement consulta = nueva_conexion.createStatement();
-            ResultSet resultados = consulta.executeQuery("SELECT nombre FROM perfil");
+            ResultSet resultados = stms.executeQuery("SELECT * FROM ADMINISTRADOR.PERFIL");
             
             while(resultados.next()){
-                perfiles.add(resultados.getString("nombre"));
+     
+                perfiles.add(resultados.getString("ID_PERFIL"));
                 
             }
             
         } catch (ClassNotFoundException | SQLException ex) {
-            
+           
             ex.printStackTrace();
             
         }finally{

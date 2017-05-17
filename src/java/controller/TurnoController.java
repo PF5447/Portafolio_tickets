@@ -6,11 +6,12 @@
 package controller;
 
 import connection.ConnectionDB;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import model.Funcionario;
+
 import model.Turnos;
 
 /**
@@ -19,25 +20,28 @@ import model.Turnos;
  */
 public class TurnoController {
     
-    public ArrayList<String> traerTurnos() throws ClassNotFoundException, SQLException{
+public ArrayList<String> traerTurnos() throws ClassNotFoundException, SQLException{
     
         ConnectionDB conexion = new ConnectionDB();
         ArrayList<String> turnos = new ArrayList<>();
-        Turnos resultado = new Turnos();
-                
+        
+        
+        
         try {
+            Connection con = conexion.getConnection();
+            Statement stms = con.createStatement();
+                    
             
-            Statement consulta = conexion.getConnection().createStatement();
-            String query = "SELECT nombre FROM turnos'";
-            ResultSet resultados = consulta.executeQuery(query);
+            ResultSet resultados = stms.executeQuery("SELECT * FROM ADMINISTRADOR.TURNOS");
             
             while(resultados.next()){
-                turnos.add(resultados.getString("nombre"));
+     
+                turnos.add(resultados.getString("ID_TURNO"));
                 
             }
             
         } catch (ClassNotFoundException | SQLException ex) {
-            
+            System.out.println("cague!");
             ex.printStackTrace();
             
         }finally{
@@ -48,5 +52,6 @@ public class TurnoController {
         return turnos;
     
     }
+    
     
 }

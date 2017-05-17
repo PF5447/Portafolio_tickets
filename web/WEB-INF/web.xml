@@ -28,6 +28,14 @@
         <servlet-name>TotemServlet</servlet-name>
         <servlet-class>servlets.TotemServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ValidacionFuncionarioServlet</servlet-name>
+        <servlet-class>servlets.ValidacionFuncionarioServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AgregarFuncionarioServlet</servlet-name>
+        <servlet-class>servlets.AgregarFuncionarioServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>*.htm</url-pattern>
@@ -47,6 +55,14 @@
     <servlet-mapping>
         <servlet-name>TotemServlet</servlet-name>
         <url-pattern>/TotemServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ValidacionFuncionarioServlet</servlet-name>
+        <url-pattern>/ValidacionFuncionarioServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AgregarFuncionarioServlet</servlet-name>
+        <url-pattern>/AgregarFuncionarioServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

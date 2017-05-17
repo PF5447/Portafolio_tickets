@@ -7,6 +7,7 @@ package servlets;
 
 import controller.FuncionarioController;
 import controller.PerfilController;
+import controller.TurnoController;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -44,11 +45,11 @@ public class LoginServlet extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             
-           
-            String nombre = request.getParameter("login_usuario");
-            String pass = request.getParameter("login_pasword");
+
             
             PerfilController perfiles = new PerfilController();
+            TurnoController turnos = new TurnoController();
+            
             
 out.println("<!DOCTYPE html>");
 out.println("<html>");
@@ -71,55 +72,14 @@ out.println("		<hr>");
 out.println("		<h2>Gestion de funcionarios</h2>");
 out.println("		<div class='container'>");
 out.println("			<div class='form-group'>");
+
+
+out.println("				<form action='./ValidacionFuncionarioServlet' method='POST' >");
 out.println("				<p>Rut</p>");
 out.println("				<input type='text' name='rut_administrador'>");
-out.println("				<input type='button' name='boton_verificacion' onclick='alert(\"hola\")' value='Verificar Disponibilidad'>");
-out.println("			</div>");
-out.println("			<div class='form-group'>");
-out.println("				<p>Nombre</p>");
-out.println("				<input type='text' name='nombre_administrador'>");
-out.println("			</div>");
-out.println("			<div class='form-group'>");
-out.println("				<p>Perfil</p>");
-out.println("				<select>");
-for(String aux : perfiles.traerTurnos()){
-out.println("					<option>"+aux+"</option>");
-}
+out.println("				<input type='submit' name='boton_verificacion' value='Verificar Disponibilidad'>");
+out.println("				</form>");
 
-out.println("				</select>");
-out.println("			</div>");
-out.println("			<div class='form-group'>");
-out.println("				<p>Turno</p>");
-out.println("				<select>");
-out.println("					<option>Traer de tabla turno</option>");
-out.println("				</select>");
-out.println("			</div>");
-out.println("			<div class='form-group'>");
-out.println("				<p>Sexo</p>");
-out.println("				<select>");
-out.println("					<option>Masculino</option>");
-out.println("					<option>Femenino</option>");
-out.println("				</select>");
-out.println("			</div>");
-out.println("			<div class='form-group'>");
-out.println("				<p>Correo</p>");
-out.println("				<input type='email' name='email_administrador'>");
-out.println("			</div>");
-out.println("			<div class='form-group'>");
-out.println("				<p>Cargo</p>");
-out.println("				<input type='text' name='cargo_administrador'>");
-out.println("			</div>");
-out.println("			<div class='form-group'>");
-out.println("				<p>Serie para colacion (id funcionario)</p>");
-out.println("				<input type='text' name='nombre_administrador'>");
-out.println("			</div>");
-out.println("			<div class='form-group'>");
-out.println("				'");
-out.println("				<input class='btn btn-primary' type='button' name='boton_guardar' value='Guardar'>");
-out.println("				<input class='btn btn-warning' type='button' name='boton_guardar' value='Modificar'>");
-out.println("				<input class='btn btn-danger' type='button' name='boton_guardar' value='Eliminar'>");
-out.println("			</div>");
-out.println("		</div>");
 out.println("		<hr>");
 out.println("		<h2>Gestion de Usuario</h2>");
 out.println("		<p class='text-muted'>Solo para creación de administradores y cajeros</p>");
@@ -185,20 +145,7 @@ out.println("</html>");
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, UnsupportedEncodingException {
-        try {
-            processRequest(request, response);
-        } catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
+    
     /**
      * Handles the HTTP <code>POST</code> method.
      *
@@ -212,6 +159,11 @@ out.println("</html>");
             throws ServletException, IOException {
         try {
             processRequest(request, response);
+            
+            
+            
+            
+            
         } catch (NoSuchAlgorithmException ex) {
             Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
         } catch (UnsupportedEncodingException ex) {

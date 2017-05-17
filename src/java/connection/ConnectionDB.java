@@ -19,8 +19,8 @@ public class ConnectionDB {
     //Nombre de servidor
     private static final String SERVERNAME = "localhost:1521:XE";
     //Credenciales de acceso
-    private static final String user = "system";
-    private static final String pass = "oracle"; 
+    private static final String user = "administrador";
+    private static final String pass = "1234"; 
     
     
     public Connection getConnection() throws ClassNotFoundException, SQLException{
