@@ -8,6 +8,7 @@ package servlets;
 import controller.FuncionarioController;
 import controller.PerfilController;
 import controller.TurnoController;
+import controller.UserController;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -42,13 +43,18 @@ public class LoginServlet extends HttpServlet {
         
         response.setContentType("text/html;charset=UTF-8");
         
+        String user = request.getParameter("login_usuario");
+        String pass = request.getParameter("login_pasword");
+        UserController us = new UserController();
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            
+            PerfilController perfiles = new PerfilController();
+            TurnoController turnos = new TurnoController(); 
 
             
-            PerfilController perfiles = new PerfilController();
-            TurnoController turnos = new TurnoController();
+            if (us.validarUsuario(user, pass)) {
+                
+    
             
             
 out.println("<!DOCTYPE html>");
@@ -89,37 +95,12 @@ out.println("			<div class='form-group'>");
 out.println("				<p>Id funcionario</p>");
 out.println("				<input type='text' name='rut_administrador_user'>");
 out.println("				<input type='button' name='boton_verificacion' value='Verificar Funcionario'>");
-out.println("			</div>");
-out.println("			<div class='form-group'>");
-out.println("				<p>User</p>");
-out.println("				<input type='text' name='rut_administrador'>");
-out.println("			</div>");
-out.println("			<div class='form-group'>");
-out.println("				<p>Contraseña</p>");
-out.println("				<input type='password' name='nombre_administrador_usuario'>");
-out.println("			</div>");
-out.println("			<div class='form-group'>");
-out.println("				<p>Repita contraseña</p>");
-out.println("				<input type='password' name='pass_administrador_usuario'>");
-out.println("			</div>");
-out.println("			<div class='form-group'>");
-out.println("				<p>Codigo Salt</p>");
-out.println("				<input type='password' name='pass_administrador_usuario'>");
-out.println("			</div>");
-out.println("			<div class='form-group'>");
-out.println("				<p>Estado</p>");
-out.println("				<p class='text-muted'>Al momento de bloquear un usuario deshabilita al funcionario</p>");
-out.println("				<select name='select_administrador_estado_user'>");
-out.println("					<option>Bloqueado</option>");
-out.println("					<option>Desbloqueado</option>");
-out.println("				</select>");
-out.println("			</div>");
-out.println("			<input class='btn btn-primary' type='button' name='boton_administracion_crear_user' value='Crear Usuario'>");
-out.println("			<input class='btn btn-warning' type='button' name='boton_administracion_modificar_user' value='Modificar Usuario'>");
-out.println("			<input class='btn btn-danger' type='button' name='boton_administracion_eliminar_user' value='Eliminar Usuario'>");
-out.println("			<hr>");
-out.println("		</div>");
-out.println("	</div>");
+out.println("                   </div>");
+out.println("           </div>");
+
+out.println("<hr>");
+
+out.println("</div>");
 out.println("	<script src='js/jquery.js'></script>");
 out.println("	<script src='js/bootstrap.min.js'></script>");
 out.println("</body>");
@@ -127,6 +108,8 @@ out.println("<footer>");
 out.println("</footer>");
 out.println("</html>");
 
+                
+            }
 
 
 

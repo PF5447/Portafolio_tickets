@@ -12,14 +12,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-
 /**
  *
  * @author bcn
  */
-public class PerfilController {
+public class GrupoController {
     
-    public ArrayList<String> traerTurnos() throws ClassNotFoundException, SQLException{
+    public ArrayList<String> traerGrupos() throws ClassNotFoundException, SQLException{
     
         ConnectionDB conexion = new ConnectionDB();
         ArrayList<String> perfiles = new ArrayList<>();
@@ -31,11 +30,11 @@ public class PerfilController {
             Statement stms = con.createStatement();
                     
             
-            ResultSet resultados = stms.executeQuery("SELECT * FROM PERFIL");
+            ResultSet resultados = stms.executeQuery("SELECT * FROM GRUPO");
             
             while(resultados.next()){
      
-                perfiles.add(resultados.getString("ID_PERFIL"));
+                perfiles.add(resultados.getString("ID_GRUPO"));
                 
             }
             

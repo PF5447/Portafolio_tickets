@@ -36,6 +36,14 @@
         <servlet-name>AgregarFuncionarioServlet</servlet-name>
         <servlet-class>servlets.AgregarFuncionarioServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ServletEliminarFuncionario</servlet-name>
+        <servlet-class>servlets.ServletEliminarFuncionario</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ServletSumarUsuario</servlet-name>
+        <servlet-class>servlets.ServletSumarUsuario</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>*.htm</url-pattern>
@@ -63,6 +71,14 @@
     <servlet-mapping>
         <servlet-name>AgregarFuncionarioServlet</servlet-name>
         <url-pattern>/AgregarFuncionarioServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletEliminarFuncionario</servlet-name>
+        <url-pattern>/ServletEliminarFuncionario</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletSumarUsuario</servlet-name>
+        <url-pattern>/ServletSumarUsuario</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

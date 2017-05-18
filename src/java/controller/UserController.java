@@ -21,7 +21,42 @@ import model.Usuario;
  */
 public class UserController {
     
-        public Usuario validarUsuario(String user, String pass) throws NoSuchAlgorithmException, UnsupportedEncodingException, ClassNotFoundException, SQLException{
+    public boolean agregarUser(String ID_USUARIO,String USER,String PASS,String CODIGO
+    ,String GRUPO_ID_GRUPO,String FUNCIONARIO_ID_FUNCIONARIO) throws NoSuchAlgorithmException, UnsupportedEncodingException, ClassNotFoundException, SQLException{
+        
+   
+
+        ConnectionDB conexion = new ConnectionDB();
+        boolean validador = false;
+  
+        MessageDigest sha = MessageDigest.getInstance("SHA-1");
+        byte[] tmp = PASS.getBytes();
+        sha.update(tmp);
+        PASS = byteArrToString(sha.digest()); 
+        
+        
+                     
+        try {
+            Connection nueva_conexion = conexion.getConnection();
+            Statement consulta = nueva_conexion.createStatement();
+            String query = "insert into USUARIO VALUES('"+ID_USUARIO+"','"+USER+"','"+PASS+"','"+CODIGO+"','"+GRUPO_ID_GRUPO+"','"+FUNCIONARIO_ID_FUNCIONARIO+"')";
+            System.out.println(query);
+            ResultSet resultados = consulta.executeQuery(query);
+            
+            while(resultados.next()){
+                validador = true;
+            }
+            
+        } catch (ClassNotFoundException | SQLException ex) {
+            ex.printStackTrace();
+        }
+        
+        
+        
+        return validador;
+    }
+    
+        public boolean validarUsuario(String user, String pass) throws NoSuchAlgorithmException, UnsupportedEncodingException, ClassNotFoundException, SQLException{
         
         ConnectionDB conexion = new ConnectionDB();
         Usuario usuario = new Usuario();
@@ -36,16 +71,12 @@ public class UserController {
         try {
             //Connection nueva_conexion = conexion.getConnection();
             Statement consulta = conexion.getConnection().createStatement();
-            String query = "SELECT * FROM persona WHERE NOMBRE="+"'"+user.trim()+"'"+"and "+"HUELLA ="+"'"+pass+"'";
+            String query = "SELECT * FROM usuario WHERE PASS ="+"'"+pass+"' AND \"user\"='"+user+"'";
+            System.out.println(query);
             ResultSet resultados = consulta.executeQuery(query);
             
             while(resultados.next()){
-                usuario.setIdUsuario(resultados.getString("ID_USUARIO"));
-                usuario.setUser(resultados.getString("user"));
-                usuario.setPass(resultados.getString("PASS"));
-                usuario.setCodigo(resultados.getString("CODIGO"));
-                usuario.setGrupo_Id_Grupo(resultados.getString("GRUPO_ID_GRUPO"));
-                usuario.setFuncionario_Id_Funcionario(resultados.getString("FUNCIONARIO_ID_FUNCIONARIO"));
+   
                 validador=true;
             }
             
@@ -57,40 +88,11 @@ public class UserController {
         }
         
         
-        return usuario;
-    }
-        
-        
-    public boolean agregarFuncionario(String id_usuario,String user,String pass,String codigo
-    ,String grupo_id_grupo,String funcionario_id_funcionario) throws NoSuchAlgorithmException, UnsupportedEncodingException, ClassNotFoundException, SQLException{
-        
-   
-
-        ConnectionDB conexion = new ConnectionDB();
-        boolean validador = false;
-        
-        
-                     
-        try {
-            Connection nueva_conexion = conexion.getConnection();
-            Statement consulta = nueva_conexion.createStatement();
-            String query = "insert into USUARIO VALUES("+id_usuario+"','"+user+"','"+pass+"','"+codigo+"','"+grupo_id_grupo+"','"+funcionario_id_funcionario+"')";
-            System.out.println(query);
-            ResultSet resultados = consulta.executeQuery(query);
-            
-            while(resultados.next()){
-                validador = true;
-            }
-            
-        } catch (ClassNotFoundException | SQLException ex) {
-            validador = false;
-            ex.printStackTrace();
-        }
-        
-        
-        
         return validador;
     }
+        
+        
+    
     
     private String byteArrToString(byte[] digest) {
         String res = null;

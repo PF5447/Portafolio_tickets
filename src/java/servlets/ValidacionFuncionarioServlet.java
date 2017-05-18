@@ -6,6 +6,7 @@
 package servlets;
 
 import controller.FuncionarioController;
+import controller.GrupoController;
 import controller.PerfilController;
 import controller.TurnoController;
 import java.io.IOException;
@@ -43,7 +44,7 @@ public class ValidacionFuncionarioServlet extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             
             
-            
+            GrupoController gru = new GrupoController();
             PerfilController perfiles = new PerfilController();
             TurnoController turnos = new TurnoController();
             FuncionarioController fun = new FuncionarioController();
@@ -79,9 +80,10 @@ out.println("			<div class='form-group'>");
 
 out.println("				<form action='./ServletEliminarFuncionario' method='POST' >");
 out.println("				<p>Rut</p>");
-out.println("				<input type='text' name='rut_administrador' value='"+funcionario.getRut()+"' disabled >");
+String run = funcionario.getRut();
+out.println("				<input type='text' name='rut_administrador_eliminar' value='"+run+"' readonly>");
 
-out.println("				</form>");
+
 out.println("			</div>");
 out.println("			<div class='form-group'>");
 out.println("				<p>Nombre</p>");
@@ -117,35 +119,66 @@ out.println("			</div>");
 out.println("			<div class='form-group'>");
 out.println("				'");
 out.println("		<a href='./ModificacionServletUsuario'>Modificar usuario</a>");
-out.println("				<input class='btn btn-danger' type='button' name='boton_guardar' value='Eliminar'>");
+out.println("				<input class='btn btn-danger' type='submit' name='boton_guardar' value='Eliminar'>");
 out.println("			</div>");
 out.println("		</div>");
+out.println("				</form>");
 out.println("		<hr>");
+
+
+
+
+
+
+
 out.println("		<h2>Gestion de Usuario</h2>");
 out.println("		<p class='text-muted'>Solo para creación de administradores y cajeros</p>");
 out.println("		<hr>");
 out.println("		<div class='container'>");
+out.println("				<form action='./ServletSumarUsuario' method='POST' >");
+
 out.println("			<div class='form-group'>");
 out.println("				<p>Id funcionario</p>");
-out.println("				<input type='text' name='rut_administrador_user'>");
+out.println("				<input type='text' name='ID_administrador_user'>");
 out.println("				<input type='button' name='boton_verificacion' value='Verificar Funcionario'>");
 out.println("			</div>");
 out.println("			<div class='form-group'>");
 out.println("				<p>User</p>");
-out.println("				<input type='text' name='rut_administrador'>");
+out.println("				<input type='text' name='USER_administrador'>");
 out.println("			</div>");
 out.println("			<div class='form-group'>");
 out.println("				<p>Contraseña</p>");
-out.println("				<input type='password' name='nombre_administrador_usuario'>");
+out.println("				<input type='password' name='PASS_administrador_usuario'>");
 out.println("			</div>");
 out.println("			<div class='form-group'>");
 out.println("				<p>Repita contraseña</p>");
-out.println("				<input type='password' name='pass_administrador_usuario'>");
+out.println("				<input type='password' name='PASSv2_administrador_usuario'>");
 out.println("			</div>");
 out.println("			<div class='form-group'>");
 out.println("				<p>Codigo Salt</p>");
-out.println("				<input type='password' name='pass_administrador_usuario'>");
+out.println("				<input type='password' name='pass_administrador_salt'>");
 out.println("			</div>");
+
+
+out.println("			<div class='form-group'>");
+out.println("				<p>Grupo</p>");
+out.println("				<select name='grupo_id_user'>");
+for (String perfil: gru.traerGrupos()) {out.println("<option>"+perfil+"</option>");      }
+out.println("				</select>");
+out.println("			</div>");
+
+
+
+
+out.println("			<div class='form-group'>");
+out.println("				<p>ID Funcionario</p>");
+out.println("				<input type='password' name='id_funcionario_launch'>");
+out.println("			</div>");
+
+
+
+
+
 out.println("			<div class='form-group'>");
 out.println("				<p>Estado</p>");
 out.println("				<p class='text-muted'>Al momento de bloquear un usuario deshabilita al funcionario</p>");
@@ -155,9 +188,11 @@ out.println("					<option>Desbloqueado</option>");
 out.println("				</select>");
 out.println("			</div>");
 
-out.println("			<input class='btn btn-warning' type='button' name='boton_administracion_modificar_user' value='Modificar Usuario'>");
-out.println("			<input class='btn btn-danger' type='button' name='boton_administracion_eliminar_user' value='Eliminar Usuario'>");
+out.println("			<input class='btn btn-danger' type='submit' name='boton_administracion_agregar_user' value='Agregar Usuario'>");
 out.println("			<hr>");
+
+out.println("				</form>");
+
 out.println("		</div>");
 out.println("	</div>");
 out.println("	<script src='js/jquery.js'></script>");

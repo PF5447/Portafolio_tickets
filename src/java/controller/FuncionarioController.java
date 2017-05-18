@@ -80,6 +80,36 @@ public class FuncionarioController {
         return resultado;
     }
     
+public boolean eliminarFuncionario(String rut) throws NoSuchAlgorithmException, UnsupportedEncodingException, ClassNotFoundException, SQLException{
+        
+        ConnectionDB conexion = new ConnectionDB();
+        
+       boolean result=false; 
+                
+        try {
+            
+            Statement consulta = conexion.getConnection().createStatement();
+            String query = "DELETE FROM FUNCIONARIO WHERE RUT = "+"'"+rut+"'";
+            ResultSet resultado = consulta.executeQuery(query);
+            System.out.println(query);
+            while(resultado.next()){
+            result=true;
+            }
+            
+          
+            
+        } catch (ClassNotFoundException | SQLException ex) {
+            
+            ex.printStackTrace();
+            
+        }finally{
+            conexion.getConnection().close();
+        }
+        
+        
+        return result;
+    }
+    
     public Funcionario retornarFuncionario(String rut) throws NoSuchAlgorithmException, UnsupportedEncodingException, ClassNotFoundException, SQLException{
         
         ConnectionDB conexion = new ConnectionDB();
@@ -97,7 +127,7 @@ public class FuncionarioController {
                 funcionario.setNombre(resultados.getString("NOMBRE"));
                 funcionario.setSexo(resultados.getString("SEXO"));
                 funcionario.setCorreo(resultados.getString("CORREO"));
-                funcionario.setIdFuncionario(resultados.getString("IDFUNCIONARIO"));
+                funcionario.setIdFuncionario(resultados.getString("ID_FUNCIONARIO"));
                 funcionario.setTurnos_Id_Turnos(resultados.getString("TURNOS_ID_TURNO"));
                 funcionario.setPerfil_Id_Perfil(resultados.getString("PERFIL_ID_PERFIL"));
             }
@@ -115,37 +145,7 @@ public class FuncionarioController {
     }
 
     
-public boolean eliminarFuncionario(String rut) throws NoSuchAlgorithmException, UnsupportedEncodingException, ClassNotFoundException, SQLException{
-        
-   
 
-        ConnectionDB conexion = new ConnectionDB();
-        boolean validador = false;
-        
-        if (validarFuncionario(rut)) {
-                     
-        try {
-            Connection nueva_conexion = conexion.getConnection();
-            Statement consulta = nueva_conexion.createStatement();
-            String query = "delete from FUNCIONARIO where rut ='"+rut+"'";
-            System.out.println(query);
-            ResultSet resultados = consulta.executeQuery(query);
-            
-            while(resultados.next()){
-                validador = true;
-            }
-            
-        } catch (ClassNotFoundException | SQLException ex) {
-            validador = false;
-            ex.printStackTrace();
-        }finally{
-            conexion.getConnection().close();
-        }
-        
-        }
-        
-        return validador;
-    }
 
     public boolean actualizarFuncionario(String rut,String nombre,String correo,String sexo
     ,String idFuncionario,String turnos_Id_Turno,String perfil_Id_Perfil) throws NoSuchAlgorithmException, UnsupportedEncodingException, ClassNotFoundException, SQLException{

@@ -32,7 +32,7 @@ public ArrayList<String> traerTurnos() throws ClassNotFoundException, SQLExcepti
             Statement stms = con.createStatement();
                     
             
-            ResultSet resultados = stms.executeQuery("SELECT * FROM ADMINISTRADOR.TURNOS");
+            ResultSet resultados = stms.executeQuery("SELECT * FROM TURNOS");
             
             while(resultados.next()){
      
