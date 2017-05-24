@@ -55,58 +55,8 @@ public class LoginServlet extends HttpServlet {
             if (us.validarUsuario(user, pass)) {
                 
     
+            response.sendRedirect("verificacion_funcionario.jsp");
             
-            
-out.println("<!DOCTYPE html>");
-out.println("<html>");
-out.println("<head>");
-out.println("	<meta charset='utf-8'>");
-out.println("	<script type='text/javascript' src=''></script>");
-out.println("	<meta name='viewport' content='width=device-width, user-scalable=no, initial-scale=1.0, maximun-scale=1.0, minimun-scale=1.0' >");
-out.println("	<link href='css/bootstrap.min.css' rel='stylesheet'>");
-out.println("	<title>Ticket Pro</title>");
-out.println("</head>");
-out.println("<body>");
-out.println("	<div class='container'>");
-out.println("	<div id=titulo>");
-out.println("		<h1>Portal de Administración</h1>");
-out.println("		<a href='./TotemServlet'>Activar Modo Totem</a>");
-out.println("		<br>");
-out.println("		<a href='./AdministracionAvanzadaServlet'>Administracion Avanzada</a>");
-out.println("	</div>");
-out.println("		<hr>");
-out.println("		<h2>Gestion de funcionarios</h2>");
-out.println("		<div class='container'>");
-out.println("			<div class='form-group'>");
-
-
-out.println("				<form action='./ValidacionFuncionarioServlet' method='POST' >");
-out.println("				<p>Rut</p>");
-out.println("				<input type='text' name='rut_administrador'>");
-out.println("				<input type='submit' name='boton_verificacion' value='Verificar Disponibilidad'>");
-out.println("				</form>");
-
-out.println("		<hr>");
-out.println("		<h2>Gestion de Usuario</h2>");
-out.println("		<p class='text-muted'>Solo para creación de administradores y cajeros</p>");
-out.println("		<hr>");
-out.println("		<div class='container'>");
-out.println("			<div class='form-group'>");
-out.println("				<p>Id funcionario</p>");
-out.println("				<input type='text' name='rut_administrador_user'>");
-out.println("				<input type='button' name='boton_verificacion' value='Verificar Funcionario'>");
-out.println("                   </div>");
-out.println("           </div>");
-
-out.println("<hr>");
-
-out.println("</div>");
-out.println("	<script src='js/jquery.js'></script>");
-out.println("	<script src='js/bootstrap.min.js'></script>");
-out.println("</body>");
-out.println("<footer>");
-out.println("</footer>");
-out.println("</html>");
 
                 
             }

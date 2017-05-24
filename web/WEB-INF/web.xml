@@ -44,6 +44,10 @@
         <servlet-name>ServletSumarUsuario</servlet-name>
         <servlet-class>servlets.ServletSumarUsuario</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>FuncionarioServlet</servlet-name>
+        <servlet-class>servlets.FuncionarioServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>*.htm</url-pattern>
@@ -79,6 +83,10 @@
     <servlet-mapping>
         <servlet-name>ServletSumarUsuario</servlet-name>
         <url-pattern>/ServletSumarUsuario</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FuncionarioServlet</servlet-name>
+        <url-pattern>/FuncionarioServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
