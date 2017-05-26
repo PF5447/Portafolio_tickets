@@ -13,9 +13,7 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,8 +22,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author bcn
  */
-@WebServlet(name = "LoginServlet", urlPatterns = {"/LoginServlet"})
-public class LoginServlet extends HttpServlet {
+public class EliminarUsuario extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,27 +36,31 @@ public class LoginServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
-        String user = request.getParameter("login_usuario");
-        String pass = request.getParameter("login_pasword");
-        UserController us = new UserController();
-
-
+        UserController user = new UserController();
+        String id = request.getParameter("id");
+        
+        
         try (PrintWriter out = response.getWriter()) {
+ 
+            if (user.eliminarUsuario(id)) {
                 
-            if (us.validarUsuario(user, pass)) {
-                RequestDispatcher dispatcher = request.getRequestDispatcher("verificacion_funcionario.jsp");
-                dispatcher.forward(request, response);
+                out.print("<p>Usuario eliminado exitosamente!</p>");
+                
+                
+            }else{
+            
+            out.print("<p>Error Usuario no eliminado!</p>");
             }
-
+            
+            
         } catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(EliminarUsuario.class.getName()).log(Level.SEVERE, null, ex);
         } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(EliminarUsuario.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(EliminarUsuario.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(EliminarUsuario.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

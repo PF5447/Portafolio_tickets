@@ -4,13 +4,15 @@
  * and open the template in the editor.
  */
 
-$(document).ready(function() {
-		$('.boton_fun').click(function(event) {
-			var nombreVar = $('.entrada_fun').val();
+ $(document).ready(function() {
+		$("#submit_formulario").click(function(event) {
+			var userVar = $("#login_usuario").val();
+                        var userPass = $("#login_pasword").val();
 			
 			// Si en vez de por post lo queremos hacer por get, cambiamos el $.post por $.get
-			$.get('FuncionarioServlet', {
-				rut : nombreVar
+			$.get('LoginServlet', {
+				user : userVar,
+                                pass : userPass
 				
 			}, function(responseText) {
 				$('#tabla').html(responseText);
@@ -18,7 +20,3 @@ $(document).ready(function() {
 		});
 	});
 
-$("#menu-toggle").click(function(e) {
-        e.preventDefault();
-        $("#wrapper").toggleClass("active");
-});

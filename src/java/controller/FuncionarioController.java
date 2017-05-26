@@ -144,9 +144,42 @@ public boolean eliminarFuncionario(String rut) throws NoSuchAlgorithmException, 
         return funcionario;
     }
 
+  public Funcionario retornarFuncionarioID(String id) throws NoSuchAlgorithmException, UnsupportedEncodingException, ClassNotFoundException, SQLException{
+        
+        ConnectionDB conexion = new ConnectionDB();
+        Funcionario funcionario = new Funcionario();
+       
+                
+        try {
+            
+            Statement consulta = conexion.getConnection().createStatement();
+            String query = "SELECT * FROM funcionario WHERE ID_FUNCIONARIO="+"'"+id+"'";
+            ResultSet resultados = consulta.executeQuery(query);
+            
+            while(resultados.next()){
+                funcionario.setRut(resultados.getString("rut"));
+                funcionario.setNombre(resultados.getString("NOMBRE"));
+                funcionario.setSexo(resultados.getString("SEXO"));
+                funcionario.setCorreo(resultados.getString("CORREO"));
+                funcionario.setIdFuncionario(resultados.getString("ID_FUNCIONARIO"));
+                funcionario.setTurnos_Id_Turnos(resultados.getString("TURNOS_ID_TURNO"));
+                funcionario.setPerfil_Id_Perfil(resultados.getString("PERFIL_ID_PERFIL"));
+            }
+            
+        } catch (ClassNotFoundException | SQLException ex) {
+            
+            ex.printStackTrace();
+            
+        }finally{
+            conexion.getConnection().close();
+        }
+        
+        
+        return funcionario;
+    }
+
     
-
-
+    
     public boolean actualizarFuncionario(String rut,String nombre,String correo,String sexo
     ,String idFuncionario,String turnos_Id_Turno,String perfil_Id_Perfil) throws NoSuchAlgorithmException, UnsupportedEncodingException, ClassNotFoundException, SQLException{
         

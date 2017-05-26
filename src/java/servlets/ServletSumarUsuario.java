@@ -13,6 +13,7 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -51,27 +52,20 @@ public class ServletSumarUsuario extends HttpServlet {
             
             if (usr.agregarUser(idUsuario, user, pass, codigo, grupo_id_grupo, funcionario_id_funcionario)) {
               
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ServletSumarUsuario</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ServletSumarUsuario at " + "exito!" + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("verificacion_funcionario.jsp");
+                dispatcher.forward(request, response);
                 
             }else{
                         out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ServletSumarUsuario</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ServletSumarUsuario at " + "error" + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-                
+                        out.println("<html>");
+                        out.println("<head>");
+                        out.println("<title>Servlet ServletSumarUsuario</title>");            
+                        out.println("</head>");
+                        out.println("<body>");
+                        out.println("<h1>Servlet ServletSumarUsuario at " + "error" + "</h1>");
+                        out.println("</body>");
+                        out.println("</html>");
+
                 
             }
             

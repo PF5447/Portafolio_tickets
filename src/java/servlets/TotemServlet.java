@@ -5,12 +5,23 @@
  */
 package servlets;
 
+import controller.FuncionarioController;
+import controller.Ticket_Controller;
+import controller.UserController;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
+import java.sql.Date;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Funcionario;
+import model.Usuario;
 
 /**
  *
@@ -29,36 +40,42 @@ public class TotemServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-out.println("<!DOCTYPE html>");
-out.println("<html>");
-out.println("<head>");
-out.println("	<meta charset='utf-8'>");
-out.println("	<script type='text/javascript' src=''></script>");
-out.println("	<meta name='viewport' content='width=device-width, user-scalable=no, initial-scale=1.0, maximun-scale=1.0, minimun-scale=1.0' >");
-out.println("	<link href='css/bootstrap.min.css' rel='stylesheet'>");
-out.println("	<title>Ticket Pro</title>");
-out.println("</head>");
-out.println("<body>");
-out.println("	<div class='container'>");
-out.println("	<div id=titulo>");
-out.println("		<h1>Totem Mode</h1>");
-out.println("		<hr>");
-out.println("	</div>");
-out.println("		<div class='form-group'>");
-out.println("			Identificador<br>");
-out.println("			<input type='text' name='Identificador'>");
-out.println("		</div>");
-out.println("		<hr>");
-out.println("		<a href='redirect.jsp'>Modo administrador</a>");
-out.println("	</div>");
-out.println("	<script src='js/jquery.js'></script>");
-out.println("	<script src='js/bootstrap.min.js'></script>");
-out.println("</body>");
-out.println("<footer>");
-out.println("</footer>");
-out.println("</html>");
+        
+        try {
+            
+            String id = request.getParameter("serie");
+            System.out.println(id);
+            FuncionarioController fun_con = new FuncionarioController();                    
+            Funcionario funcionario = fun_con.retornarFuncionarioID(id);
+            Ticket_Controller ti_con = new Ticket_Controller();
+            
+            try {
+                response.setContentType("text/html;charset=UTF-8");
+                
+                try (PrintWriter out = response.getWriter()) {                
+                    
+                    if (ti_con.agregarTicket("id_test", "id_status", funcionario.getRut(), funcionario.getRut(), "emitido", "Cobro colacio", "Cena", "Cange comun", "Sin datos", 2500, funcionario.getIdFuncionario())) {
+                        
+                        
+                        
+                    }else{
+                    
+                        out.println("usuario no encontrado");
+                    }
+                    
+                    
+                }
+            } catch (UnsupportedEncodingException ex) {
+                Logger.getLogger(TotemServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(TotemServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(TotemServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(TotemServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(TotemServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

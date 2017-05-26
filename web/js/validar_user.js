@@ -4,21 +4,17 @@
  * and open the template in the editor.
  */
 
+
 $(document).ready(function() {
-		$('.boton_fun').click(function(event) {
-			var nombreVar = $('.entrada_fun').val();
+		$('#user_verificacion').click(function(event) {
+			var idUser = $('#rut_administrador_user').val();
 			
 			// Si en vez de por post lo queremos hacer por get, cambiamos el $.post por $.get
-			$.get('FuncionarioServlet', {
-				rut : nombreVar
+			$.get('UsuarioServlet', {
+				idUsuario : idUser
 				
 			}, function(responseText) {
 				$('#tabla').html(responseText);
 			});
 		});
 	});
-
-$("#menu-toggle").click(function(e) {
-        e.preventDefault();
-        $("#wrapper").toggleClass("active");
-});

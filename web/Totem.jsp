@@ -1,6 +1,6 @@
 <%-- 
-    Document   : verificacio_funcionario
-    Created on : 24-05-2017, 10:24:41
+    Document   : Totem
+    Created on : 25-05-2017, 14:23:49
     Author     : bcn
 --%>
 
@@ -27,7 +27,7 @@
              <li class="sidebar-brand"><a id="menu-toggle" href="#">Menu</a></li>
         </ul>
             <ul class="sidebar-nav" id="sidebar">     
-                <li><a href="Totem.jsp">Modo Totem<span class="sub_icon glyphicon glyphicon-link"></span></a></li>
+              <li><a href="Totem.jsp">Modo Totem<span class="sub_icon glyphicon glyphicon-link"></span></a></li>
               <li><a href="verificacion_funcionario.jsp">Personas<span class="sub_icon glyphicon glyphicon-link"></span></a></li>
               <li><a href="gestion_usuarios.jsp">Usuarios<span class="sub_icon glyphicon glyphicon-link"></span></a></li>
               <li><a>Grupos<span class="sub_icon glyphicon glyphicon-link"></span></a></li>
@@ -45,20 +45,32 @@
           <div class="row">
               <div class="col-md-12">
 
-                  <div class='container'>
-                <div id=titulo>
-                    <h1>Portal de Administración</h1>
-                    <br>
-                </div>
-		<hr>
-		<h2>Gestion de funcionarios</h2>
-		<div class='container'>
+                 <div class='container'>
 			<div class='form-group'>
-				
-                            <input type='text' class='entrada_fun' name='rut_administrador' placeholder="Ingrese rut a consultar" required="">
-                                <input type='button' class='boton_fun' name='boton_verificacion' value='Verificar Disponibilidad'>
-				
+                                <p>Huella digital</p>
+				<input type='text' id='totem_serie'><br>
+
+				<input type='button' id='boton_verificacion' value='Imprimir Ticket'>
+                                  <script type="text/javascript">
+                                    $(document).ready(function() {
+                                            $('#boton_verificacion').click(function(event) {
+                                                    var nombreVar = $('#totem_serie').val();
+
+                                                    // Si en vez de por post lo queremos hacer por get, cambiamos el $.post por $.get
+                                                    $.get('TotemServlet', {
+                                                            serie : nombreVar
+
+                                                    }, function(responseText) {
+                                                            $('#tabla').html(responseText);
+                                                    });
+                                            });
+                                    });
+                                </script>
+	
+                            </div>
                         </div>
+                  
+                  
                 <div id="tabla"></div>
                 </div>
         </div>
@@ -74,3 +86,4 @@
 
 
 </html>
+
