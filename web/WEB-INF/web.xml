@@ -17,20 +17,8 @@
         <servlet-class>servlets.RegistroServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>AdministracionAvanzadaServlet</servlet-name>
-        <servlet-class>servlets.AdministracionAvanzadaServlet</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>TotemServlet</servlet-name>
         <servlet-class>servlets.TotemServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ValidacionFuncionarioServlet</servlet-name>
-        <servlet-class>servlets.ValidacionFuncionarioServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ServletEliminarFuncionario</servlet-name>
-        <servlet-class>servlets.ServletEliminarFuncionario</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ServletSumarUsuario</servlet-name>
@@ -61,20 +49,8 @@
         <url-pattern>/RegistroServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>AdministracionAvanzadaServlet</servlet-name>
-        <url-pattern>/AdministracionAvanzadaServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>TotemServlet</servlet-name>
         <url-pattern>/TotemServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ValidacionFuncionarioServlet</servlet-name>
-        <url-pattern>/ValidacionFuncionarioServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ServletEliminarFuncionario</servlet-name>
-        <url-pattern>/ServletEliminarFuncionario</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ServletSumarUsuario</servlet-name>

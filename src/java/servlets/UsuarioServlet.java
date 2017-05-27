@@ -18,6 +18,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Funcionario;
 
 /**
  *
@@ -36,86 +37,7 @@ public class UsuarioServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
-        response.setContentType("text/html;charset=UTF-8");
         
-        String idFuncionario = request.getParameter("rut");
-        FuncionarioController fun = new FuncionarioController();
-        GrupoController gru = new GrupoController();
-        
-        
-        
-        try (PrintWriter out = response.getWriter()) {
-           
-            if (fun.validarFuncionario(idFuncionario)) {
-                
-                out.print("<p>Funcionario existente, puede crear usuario</p>");
-                out.println("		<h2>Gestion de Usuario</h2>");
-                out.println("		<p class='text-muted'>Solo para creación de administradores y cajeros</p>");
-                out.println("		<hr>");
-                out.println("		<div class='container'>");
-                out.println("				<form action='./ServletSumarUsuario' method='POST' >");
-                out.println("			<div class='form-group'>");
-                out.println("				<p>Id Usuario</p>");
-                out.println("				<input type='text' name='ID_administrador_user'>");              
-                out.println("			</div>");
-                out.println("			<div class='form-group'>");
-                out.println("				<p>User</p>");
-                out.println("				<input type='text' name='USER_administrador'>");
-                out.println("			</div>");
-                out.println("			<div class='form-group'>");
-                out.println("				<p>Contraseña</p>");
-                out.println("				<input type='password' name='PASS_administrador_usuario'>");
-                out.println("			</div>");
-                out.println("			<div class='form-group'>");
-                out.println("				<p>Repita contraseña</p>");
-                out.println("				<input type='password' name='PASSv2_administrador_usuario'>");
-                out.println("			</div>");
-                out.println("			<div class='form-group'>");
-                out.println("				<p>Codigo Salt</p>");
-                out.println("				<input type='password' name='pass_administrador_salt'>");
-                out.println("			</div>");
-                out.println("			<div class='form-group'>");
-                out.println("				<p>Grupo</p>");
-                out.println("				<select name='grupo_id_user'>");
-                for (String perfil: gru.traerGrupos()) {out.println("<option>"+perfil+"</option>");      }
-                out.println("				</select>");
-                out.println("			</div>");
-                out.println("			<div class='form-group'>");
-                out.println("				<p>ID Funcionario</p>");
-                out.println("				<input type='password' name='id_funcionario_launch'>");
-                out.println("			</div>");
-                out.println("			<div class='form-group'>");
-                out.println("				<p>Estado</p>");
-                out.println("				<p class='text-muted'>Al momento de bloquear un usuario deshabilita al funcionario</p>");
-                out.println("				<select name='select_administrador_estado_user'>");
-                out.println("					<option>Bloqueado</option>");
-                out.println("					<option>Desbloqueado</option>");
-                out.println("				</select>");
-                out.println("			</div>");
-                out.println("			<input class='btn btn-danger' type='submit' name='boton_administracion_agregar_user' value='Agregar Usuario'>");
-                out.println("			<hr>");
-                out.println("				</form>");
-                out.println("		</div>");
-                out.println("	</div>");
-                out.println("	<script src='js/jquery.js'></script>");
-                out.println("	<script src='js/bootstrap.min.js'></script>");
-                out.println("</body>");
-                out.println("<footer>");
-                out.println("</footer>");
-                out.println("</html>"); 
-
-            }else{
-            
-                out.print("<p>Funcionario no existe, primero debe enrolarse.</p>");
-            }
-            
-        } catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(UsuarioServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(UsuarioServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(UsuarioServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -130,11 +52,139 @@ public class UsuarioServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+    
         try {
-            processRequest(request, response);
+            
+            response.setContentType("text/html;charset=UTF-8");
+            
+            String rut = request.getParameter("rut");
+            FuncionarioController fun_con = new FuncionarioController();
+            GrupoController gru = new GrupoController();
+            Funcionario fun = fun_con.retornarFuncionario(rut);
+            
+            
+            
+            try (PrintWriter out = response.getWriter()) {
+                
+                if (fun_con.validarFuncionario(rut)) {
+                    
+                    
+                    out.println("		<p class='text-muted'>Solo para creación de administradores y cajeros</p>");
+                    out.println("		<hr>");
+                    out.println("		<div class='container'>");
+                    
+                    out.println("			<div class='form-group'>");
+                    out.println("				<p>Rut funcionario</p>");
+                    out.println("				<input type='text' id='ID_administrador_user' value='"+rut+"' readonly >");
+                    out.println("			</div>");
+                    out.println("			<div class='form-group'>");
+                    out.println("				<p>User</p>");
+                    out.println("				<input type='text' id='USER_administrador'>");
+                    out.println("			</div>");
+                    out.println("			<div class='form-group'>");
+                    out.println("				<p>Contraseña</p>");
+                    out.println("				<input type='password' id='PASS_usuario'>");
+                    out.println("			</div>");
+                    
+                   
+                    
+                    out.println("			<div class='form-group'>");
+                    out.println("				<p>Repita contraseña</p>");
+                    out.println("				<input type='password' id='PASS2_usuario'>");
+                    out.println("			</div>");
+                   
+                     out.println("			<div class='form-group'>");
+                    out.println("				<p>Codigo de recuperación de contraseña</p>");
+                    out.println("				<input type='text' id='CODE_recuperar'>");
+                    out.println("			</div>");
+                    
+                    
+                    out.println("			<div class='form-group'>");
+                    out.println("				<p>Grupo</p>");
+                    out.println("				<select id='SELECT_grupo'>");
+                    for (String perfil: gru.traerGrupos()) {out.println("<option>"+perfil+"</option>");      }
+                    out.println("				</select>");
+                    out.println("			</div>");
+                    out.println("			<div class='form-group'>");
+                    out.println("				<p>ID Funcionario este codigo es usado para cobrar colacion</p>");
+                    out.println("				<input type='text' id='id_funcionario' value='"+fun.getIdFuncionario()+"'>");
+                    out.println("			</div>");
+                    out.println("			<div class='form-group'>");
+                    
+                    out.println("			</div>");
+                    out.println("			<input class='btn btn-danger' type='button' id='boton_administracion_agregar_user' value='Agregar Usuario'>");
+                    
+                    //Seccion de script que debe enviar datos a servlet para agregar nuevo user por jquery
+                    out.println("			<script type='text/javascript'>");
+                    out.println(" $(document).ready(function() {			");
+                    out.println("$('#boton_administracion_agregar_user').click(function(event) {			");
+                    out.println("			var userVar = $('#USER_administrador').val();");
+                    out.println("			var passVar = $('#PASS_usuario').val();");
+                    out.println("			var pass2Var = $('#PASS2_usuario').val();");
+                    out.println("			var recuperaVar = $('#CODE_recuperar').val();");
+                    out.println("			var grupoVar = $('#SELECT_grupo').val();");
+                    out.println("			var idFuncionarioVar = $('#id_funcionario').val();");
+                    //Comienza if para validar entradas
+                    out.println("			if (userVar===\"\" || passVar===\"\" || pass2Var===\"\" || recuperaVar===\"\" ) {");
+                    out.println("			");
+                    out.println("			alert(\"Campo Vacio, error! \");");
+                    out.println("			 return false;");
+                    out.println("			 }else if(passVar!==pass2Var){");
+                    out.println("			alert(\"Contraseñas no coinciden, error! \");");
+                    out.println("			return false;}");
+                    out.println("			");
+//termina if
+                    out.println("			 $.get('ServletSumarUsuario', {");
+                    out.println("			 user : userVar,");
+                    out.println("			 pass : passVar,");
+                    out.println("			 recuperar : recuperaVar,");
+                    out.println("			 grupo : grupoVar,");
+                    out.println("			 id_funcionario : idFuncionarioVar");
+                    out.println("			}, function(responseText) {");
+                    out.println("			       if(responseText===\"true\"){alert('Usuario agregado exitosamente');}else{alert('Usuario no agregado, Funcionario ya Tiene Usuario!');}                        ");
+                    out.println("			                               ");
+                    out.println("			                               ");
+                    out.println("			                               ");
+                    out.println("			});");
+                    out.println("			");
+                    out.println("			});");
+                    out.println("			});");
+                    out.println("			</script>");
+                    
+                    out.println("			<hr>");
+                    
+                    out.println("		</div>");
+                    out.println("	</div>");
+                    out.println("	<script src='js/jquery.js'></script>");
+                    out.println("	<script src='js/bootstrap.min.js'></script>");
+                    out.println("</body>");
+                    out.println("<footer>");
+                    out.println("</footer>");
+                    out.println("</html>");
+                    
+                }else{
+                    
+                    out.print("false");
+                }
+                
+            } catch (NoSuchAlgorithmException | UnsupportedEncodingException | ClassNotFoundException ex) {
+                Logger.getLogger(UsuarioServlet.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(UsuarioServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(UsuarioServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(UsuarioServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(UsuarioServlet.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
+    
+    
     }
 
     /**
@@ -148,11 +198,6 @@ public class UsuarioServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(UsuarioServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
     /**

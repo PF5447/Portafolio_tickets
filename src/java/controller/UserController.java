@@ -22,11 +22,11 @@ import model.Usuario;
  */
 public class UserController {
     
-    public boolean agregarUser(String ID_USUARIO,String USER,String PASS,String CODIGO
+    public boolean agregarUser(String id_user,String USER,String PASS,String CODIGO
     ,String GRUPO_ID_GRUPO,String FUNCIONARIO_ID_FUNCIONARIO) throws NoSuchAlgorithmException, UnsupportedEncodingException, ClassNotFoundException, SQLException{
         
    
-
+        
         ConnectionDB conexion = new ConnectionDB();
         boolean validador = false;
   
@@ -40,7 +40,7 @@ public class UserController {
         try {
             Connection nueva_conexion = conexion.getConnection();
             Statement consulta = nueva_conexion.createStatement();
-            String query = "insert into USUARIO VALUES('"+ID_USUARIO+"','"+USER+"','"+PASS+"','"+CODIGO+"','"+GRUPO_ID_GRUPO+"','"+FUNCIONARIO_ID_FUNCIONARIO+"')";
+            String query = "insert into USUARIO VALUES('"+id_user+"','"+USER+"','"+PASS+"','"+CODIGO+"','"+GRUPO_ID_GRUPO+"','"+FUNCIONARIO_ID_FUNCIONARIO+"')";
             System.out.println(query);
             ResultSet resultados = consulta.executeQuery(query);
             

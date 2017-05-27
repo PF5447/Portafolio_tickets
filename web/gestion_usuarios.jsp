@@ -42,42 +42,64 @@
             <div class="row">
               <div class="col-md-12">
                     
-                  		<hr>
+                <hr>
 		<h2>Gestion de Usuario</h2>
-		<p class='text-muted'>Solo para creación de administradores y cajeros</p>
-		<hr>
+                <p class='text-muted' id="mensaje_superior">Solo para creación de administradores y cajeros</p>
+                <hr id="separador_inferior">
 		<div class='container'>
 			<div class='form-group'>
-				<p>Id funcionario</p>
-				<input type='text' id='rut_administrador_user'>
+                            	
+                            <p id="p_rut_funcionario">Rut funcionario</p>
+                                <input type='text' id='rut_administrador_user' placeholder="ingrese un RUT" required>
                                 <input type='button' id='user_verificacion' value='Buscar Funcionario' placeholder="rut funcionario">
                                
                                 <script type="text/javascript">
                                     $(document).ready(function() {
                                             $('#user_verificacion').click(function(event) {
                                                     var nombreVar = $('#rut_administrador_user').val();
-
+                                                    if (nombreVar==="") {
+                                                        alert('Debe incluir al menos una entrada');
+                                                        return false;
+                                                     }
                                                     // Si en vez de por post lo queremos hacer por get, cambiamos el $.post por $.get
                                                     $.get('UsuarioServlet', {
                                                             rut : nombreVar
 
                                                     }, function(responseText) {
-                                                            $('#tabla').html(responseText);
+                                                        if (responseText==="false") {
+                                                            alert("Funcionario No Existe, debe crear un funcionario primero");
+                                                    }else{
+                                                        
+                                                        $('#tabla').html(responseText);
+                                                        $('#user_verificacion').hide();
+                                                        $('#rut_administrador_user').hide();
+                                                        $('#separador_inferior').hide();
+                                                        $('#mensaje_superior').hide();
+                                                        $('#p_rut_funcionario').hide();
+                                                        $('#user_delete').hide();
+                                                    }    
+                                                        
                                                     });
                                             });
                                     });
                                 </script>
                                 <input type='button' id='user_delete' value='Eliminar Usuario'>
-                                                                <script type="text/javascript">
+                                
+                                    <script type="text/javascript">
+                                                                    
                                     $(document).ready(function() {
                                             $('#user_delete').click(function(event) {
                                                     var nombreVar = $('#rut_administrador_user').val();
-
+                                                    if (nombreVar==="") {
+                                                        alert("Campo Vacio, usuario no válido");
+                                                        return false;
+                                                    }
                                                     // Si en vez de por post lo queremos hacer por get, cambiamos el $.post por $.get
                                                     $.get('EliminarUsuario', {
                                                             id : nombreVar
 
                                                     }, function(responseText) {
+                                                           
                                                             $('#tabla').html(responseText);
                                                     });
                                             });

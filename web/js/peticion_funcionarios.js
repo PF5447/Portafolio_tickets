@@ -5,15 +5,27 @@
  */
 
 $(document).ready(function() {
-		$('.boton_fun').click(function(event) {
+		$('.boton_fun').click(function() {
 			var nombreVar = $('.entrada_fun').val();
-			
+                        
+                        if (nombreVar==="") {
+                        alert('Debe ingresar al menos un valor.');
+                        return false;
+                        }    
+                    
 			// Si en vez de por post lo queremos hacer por get, cambiamos el $.post por $.get
 			$.get('FuncionarioServlet', {
 				rut : nombreVar
-				
+                                 
 			}, function(responseText) {
-				$('#tabla').html(responseText);
+                            if (responseText==="formato_error") {
+                alert('Formato de rut Inválido');
+            }else if(responseText==="rut_existe"){
+                alert('Funcionario ya enrolado!');
+            }else{
+                $('#tabla').html(responseText);
+            }
+				
 			});
 		});
 	});

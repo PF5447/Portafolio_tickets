@@ -5,6 +5,8 @@
  */
 package servlets;
 
+import controller.FuncionarioController;
+import controller.MailController;
 import controller.UserController;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -18,6 +20,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Funcionario;
 
 /**
  *
@@ -38,48 +41,7 @@ public class ServletSumarUsuario extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        String idUsuario = request.getParameter("ID_administrador_user");
-        String user = request.getParameter("USER_administrador");
-        String pass = request.getParameter("PASS_administrador_usuario");
-        String codigo = request.getParameter("pass_administrador_salt");
-        String grupo_id_grupo = request.getParameter("grupo_id_user");
-        String funcionario_id_funcionario = request.getParameter("id_funcionario_launch");
         
-        UserController usr = new UserController();
-        
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            
-            if (usr.agregarUser(idUsuario, user, pass, codigo, grupo_id_grupo, funcionario_id_funcionario)) {
-              
-                RequestDispatcher dispatcher = request.getRequestDispatcher("verificacion_funcionario.jsp");
-                dispatcher.forward(request, response);
-                
-            }else{
-                        out.println("<!DOCTYPE html>");
-                        out.println("<html>");
-                        out.println("<head>");
-                        out.println("<title>Servlet ServletSumarUsuario</title>");            
-                        out.println("</head>");
-                        out.println("<body>");
-                        out.println("<h1>Servlet ServletSumarUsuario at " + "error" + "</h1>");
-                        out.println("</body>");
-                        out.println("</html>");
-
-                
-            }
-            
-            
-            
-        } catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(ServletSumarUsuario.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(ServletSumarUsuario.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ServletSumarUsuario.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(ServletSumarUsuario.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -94,7 +56,57 @@ public class ServletSumarUsuario extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+     
+        
+        try {
+            
+            
+            String user = request.getParameter("user");
+            String pass = request.getParameter("pass");
+            String recuperar = request.getParameter("recuperar");
+            String grupo = request.getParameter("grupo");
+            String funcionario_id_funcionario = request.getParameter("id_funcionario");
+            UserController usr = new UserController();
+            FuncionarioController fun_con = new FuncionarioController();
+            Funcionario fun = fun_con.retornarFuncionarioID(funcionario_id_funcionario);
+            
+            
+            
+            
+            try (PrintWriter out = response.getWriter()) {
+                /* TODO output your page here. You may use following sample code. */
+                
+                if (usr.agregarUser( funcionario_id_funcionario,user, pass, recuperar, grupo, funcionario_id_funcionario)) {
+                    
+                    
+                        MailController mail = new MailController();
+                        mail.setUsername("f.inostrozam@alumnos.duoc.cl");
+                        mail.setPassWord("elodia.....");
+                        mail.setTo(fun.getCorreo());
+                        mail.setSubject("Recuperacion de Contraseña Ticket pro");
+                        mail.setMessage("Estimado, guarde este mensaje que es para recuperar su contraseña de usuario \n Contraseña de Recuperación :  "+recuperar);
+                        mail.SendMail();
+                        out.print("true");
+                        
+                        
+                    
+                }else{
+                    out.print("false");
+                    
+                }
+                
+                
+                
+            } catch (NoSuchAlgorithmException | UnsupportedEncodingException | ClassNotFoundException | SQLException ex) {
+                Logger.getLogger(ServletSumarUsuario.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            
+        } catch (NoSuchAlgorithmException | UnsupportedEncodingException | ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(ServletSumarUsuario.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
     }
 
     /**
@@ -108,7 +120,7 @@ public class ServletSumarUsuario extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
     }
 
     /**

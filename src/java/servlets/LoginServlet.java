@@ -38,29 +38,7 @@ public class LoginServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-
-        String user = request.getParameter("login_usuario");
-        String pass = request.getParameter("login_pasword");
-        UserController us = new UserController();
-
-
-        try (PrintWriter out = response.getWriter()) {
-                
-            if (us.validarUsuario(user, pass)) {
-                RequestDispatcher dispatcher = request.getRequestDispatcher("verificacion_funcionario.jsp");
-                dispatcher.forward(request, response);
-            }
-
-        } catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -89,7 +67,30 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
+        response.setContentType("text/html;charset=UTF-8");
+
+        String user = request.getParameter("user");
+        String pass = request.getParameter("pass");
+        UserController us = new UserController();
+
+
+        try (PrintWriter out = response.getWriter()) {
+                
+            if (us.validarUsuario(user, pass)) {
+                
+//                RequestDispatcher dispatcher = request.getRequestDispatcher("verificacion_funcionario.jsp");
+//                dispatcher.forward(request, response);
+                 out.print("true");
+            }else{
+                out.print("false");
+                
+            }
+
+        } catch (NoSuchAlgorithmException | UnsupportedEncodingException | ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
 
     /**

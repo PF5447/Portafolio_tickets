@@ -10,7 +10,7 @@
 <head>
 	<meta charset='utf-8'>
 	<script type='text/javascript' src='js/jquery.js'></script>
-        <script type='text/javascript' src='js/peticion_funcionarios.js'></script>
+        
 	<link href='css/bootstrap.min.css' rel='stylesheet'>
 	<link href='css/estilo_menu.css' rel='stylesheet'>
 	<title>Gestion Funcionarios</title>
@@ -55,9 +55,41 @@
 		<div class='container'>
 			<div class='form-group'>
 				
-                            <input type='text' class='entrada_fun' name='rut_administrador' placeholder="Ingrese rut a consultar" required="">
-                                <input type='button' class='boton_fun' name='boton_verificacion' value='Verificar Disponibilidad'>
-				
+                            <input type='text' class='entrada_fun' id='rut_administrador' placeholder="Formato xxxxxxxx-x" required>
+                         
+                           
+                            <input type='button' class='boton_fun' id='boton_verificacion' value='Verificar Disponibilidad'>
+                             <script type="text/javascript">
+                                                                    
+                                    $(document).ready(function() {
+                                            $('#boton_verificacion').click(function(event) {
+                                                    var nombreVar = $('#rut_administrador').val();
+                                                    
+                                                        
+                                                        if (nombreVar==="") {
+                                                        alert("Campo Vacio, usuario no válido");
+                                                        return false;
+                                                    }
+                                                    // Si en vez de por post lo queremos hacer por get, cambiamos el $.post por $.get
+                                                    $.get('FuncionarioServlet', {
+                                                            rut : nombreVar
+
+                                                    }, function(responseText) {
+                                                        if (responseText==="rut_existe") {
+                                                               alert('Rut ya se encuentra'); 
+                                                        }else if(responseText==="formato_error"){
+                                                                alert('Rut No tiene formato válido');
+                                                        }else{
+                                                                $("#rut_administrador").hide();
+                                                                $("#boton_verificacion").hide();
+                                                                $('#tabla').html(responseText);
+                                                            
+                                                        }
+                                                            
+                                                    });
+                                            });
+                                    });
+                                </script>
                         </div>
                 <div id="tabla"></div>
                 </div>
