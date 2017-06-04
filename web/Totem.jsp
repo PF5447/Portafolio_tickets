@@ -53,15 +53,22 @@
 				<input type='button' id='boton_verificacion' value='Imprimir Ticket'>
                                   <script type="text/javascript">
                                     $(document).ready(function() {
-                                            $('#boton_verificacion').click(function(event) {
-                                                    var nombreVar = $('#totem_serie').val();
+                                            $('#boton_verificacion').click(function() {
+                                                    var serieFuncionario = $('#totem_serie').val();
 
                                                     // Si en vez de por post lo queremos hacer por get, cambiamos el $.post por $.get
                                                     $.get('TotemServlet', {
-                                                            serie : nombreVar
+                                                            serie : serieFuncionario
 
                                                     }, function(responseText) {
-                                                            $('#tabla').html(responseText);
+                                                            
+                                                            if (responseText==='false') {
+                                                                alert('Lo Sentimos Aun no puedes solicitar Tickets \nHorarios:\n -Desayuno : 08:00:00 - 10:00:00\n -Almuerzo: 12:00:00 - 15:00:00\n -Once: 17:00:00 - 19:00:00\n -Cena: 21:00:00 - 23:00:00');
+    
+                                                            }else{
+                                                                $('#tabla').html(responseText);
+                                                            }
+                                                            
                                                     });
                                             });
                                     });

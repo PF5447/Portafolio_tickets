@@ -59,7 +59,9 @@
                          
                            
                             <input type='button' class='boton_fun' id='boton_verificacion' value='Verificar Disponibilidad'>
-                             <script type="text/javascript">
+                             
+                             <div id='tabla'></div>
+                            <script type="text/javascript">
                                                                     
                                     $(document).ready(function() {
                                             $('#boton_verificacion').click(function(event) {
@@ -82,7 +84,7 @@
                                                         }else{
                                                                 $("#rut_administrador").hide();
                                                                 $("#boton_verificacion").hide();
-                                                                $('#tabla').html(responseText);
+                                                                $("#tabla").html(responseText);
                                                             
                                                         }
                                                             
@@ -91,7 +93,7 @@
                                     });
                                 </script>
                         </div>
-                <div id="tabla"></div>
+               
                 </div>
         </div>
                   

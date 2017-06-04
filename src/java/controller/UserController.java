@@ -10,6 +10,7 @@ import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -39,14 +40,13 @@ public class UserController {
                      
         try {
             Connection nueva_conexion = conexion.getConnection();
-            Statement consulta = nueva_conexion.createStatement();
+            //Statement consulta = nueva_conexion.createStatement();
             String query = "insert into USUARIO VALUES('"+id_user+"','"+USER+"','"+PASS+"','"+CODIGO+"','"+GRUPO_ID_GRUPO+"','"+FUNCIONARIO_ID_FUNCIONARIO+"')";
             System.out.println(query);
-            ResultSet resultados = consulta.executeQuery(query);
-            
-            while(resultados.next()){
-                validador = true;
-            }
+            PreparedStatement ps = nueva_conexion.prepareStatement(query);
+            //ResultSet resultados = consulta.executeQuery(query);
+            ps.executeUpdate();
+           
             
         } catch (ClassNotFoundException | SQLException ex) {
             ex.printStackTrace();

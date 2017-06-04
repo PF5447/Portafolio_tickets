@@ -10,6 +10,7 @@ import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -33,14 +34,18 @@ public class FuncionarioController {
                      
         try {
             Connection nueva_conexion = conexion.getConnection();
-            Statement consulta = nueva_conexion.createStatement();
+            //Statement consulta = nueva_conexion.createStatement();
             String query = "insert into FUNCIONARIO VALUES('"+rut+"','"+nombre+"','"+correo+"','"+sexo+"','"+idFuncionario+"','"+turnos_Id_Turno+"','"+perfil_Id_Perfil+"')";
             System.out.println(query);
-            ResultSet resultados = consulta.executeQuery(query);
+            //ResultSet resultados = consulta.executeQuery(query);
+            PreparedStatement ps = nueva_conexion.prepareStatement(query);
+            //ResultSet resultados = consulta.executeQuery(query);
+            ps.executeUpdate();
             
-            while(resultados.next()){
-                validador = true;
-            }
+//            
+//            while(resultados.next()){
+//                validador = true;
+//            }
             
         } catch (ClassNotFoundException | SQLException ex) {
             ex.printStackTrace();

@@ -107,7 +107,7 @@ public class UsuarioServlet extends HttpServlet {
                     out.println("			</div>");
                     out.println("			<div class='form-group'>");
                     out.println("				<p>ID Funcionario este codigo es usado para cobrar colacion</p>");
-                    out.println("				<input type='text' id='id_funcionario' value='"+fun.getIdFuncionario()+"'>");
+                    out.println("				<input type='text' id='id_funcionario' value='"+fun.getIdFuncionario()+"' readonly>");
                     out.println("			</div>");
                     out.println("			<div class='form-group'>");
                     

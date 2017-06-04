@@ -6,13 +6,27 @@
 package controller;
 
 import connection.ConnectionDB;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.io.Writer;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import model.Funcionario;
 import model.Ticket;
 
 /**
@@ -52,6 +66,121 @@ public class Ticket_Controller {
         
         return validador;
     }
+
+    public boolean agregarTicket(String idFuncionario) throws IOException {
+       
+        boolean validador = false;
+        
+        try {
+            
+            
+            ConnectionDB conexion = new ConnectionDB();
+            
+            //se genera una serie en base a la fecha y hora actuales
+            LocalDateTime serie = LocalDateTime.now().plusHours(1);
+            
+            //variable encargada de los rangos de horarios.
+            LocalTime now = LocalTime.now().plusHours(1);
+            
+            String id_ticket = serie.toString().replace(".","").replace("-","").replace(":","");
+            String status = "Emitido";
+            String status_1 = "No Canjeado";
+            FuncionarioController fun_con = new FuncionarioController();
+            Funcionario funcionario = fun_con.retornarFuncionarioID(idFuncionario);
+            String block_by = funcionario.getRut();
+            String created_by = funcionario.getNombre();
+            String block_datails = "Bloqueo por emision rutinaria";
+            String tipo="";
+            String hora_fin = "";
+            
+            
+            //Rangos de horarios para las minutas.
+            if (now.isAfter(LocalTime.of(8, 0, 0)) && now.isBefore(LocalTime.of(10, 0, 0))) {
+                tipo = "Desayuno";
+                hora_fin = "10:00:00";
+            }else if (now.isAfter(LocalTime.of(12, 0, 0)) && now.isBefore(LocalTime.of(15, 0, 0))){
+                tipo = "Almuerzo";
+                hora_fin = "15:00:00";
+            }else if (now.isAfter(LocalTime.of(17, 0, 0)) && now.isBefore(LocalTime.of(19, 0, 0))){
+                tipo = "Once";
+                hora_fin = "19:00:00";
+            }else if (now.isAfter(LocalTime.of(21, 0, 0)) && now.isBefore(LocalTime.of(23, 0, 0))){
+                tipo = "Cena";
+                hora_fin = "23:00:00";
+            }else{
+                return false;
+            }
+                    
+            String especial_details = "Emision regular";
+            String aditional_details = "Emision regular";
+            
+            
+            String funcionario_id_funcionario = funcionario.getIdFuncionario();
+            
+            String valor = "";
+            
+            switch (funcionario.getPerfil_Id_Perfil()) {
+                case "ADM":
+                    valor="4000";
+                    break;
+                case "GR":
+                    valor="5000";
+                    break;
+                case "MT":
+                    valor="3000";
+                    break;
+                case "OP":
+                    valor="3000";
+                    break;
+                default:
+                    break;
+            }
+            
+            
+            try {
+                Connection nueva_conexion = conexion.getConnection();
+                
+                String query = "insert into TICKET VALUES('"+id_ticket+"',TO_CHAR( SYSDATE, 'HH24:MI:SS' ),'"+hora_fin+"','"+status+"','"+block_by+"','"+created_by+"','"+status_1+"',TO_CHAR( SYSDATE),'"+block_datails+"','"+tipo+ "','"+especial_details+"','"+aditional_details+"',"+valor+",'"+funcionario_id_funcionario+"')";
+                System.out.println(query);
+                PreparedStatement ps = nueva_conexion.prepareStatement(query);
+                //ResultSet resultados = consulta.executeQuery(query);
+                ps.executeUpdate();
+                
+                Writer writer = null;
+ 
+                try {
+                    String impresion = String.format("################## Ticket Pro ################## %nTicket Id=%-20s %nTipo=%-20s %nNombre=%-20s %nValor=%-20s %n################################################",id_ticket,tipo,funcionario.getNombre(),valor);
+                    File file = new File("D:\\"+id_ticket+".txt");
+                    writer = new BufferedWriter(new FileWriter(file));
+                    writer.write(impresion);
+                    validador = true;
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } finally {
+                    if (writer != null) {
+                        writer.close();
+                    }
+                }
+     
+            } catch (ClassNotFoundException | SQLException ex) {
+                
+                ex.printStackTrace();
+                
+            }
+                
+            
+            
+        } catch (NoSuchAlgorithmException | UnsupportedEncodingException | ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(Ticket_Controller.class.getName()).log(Level.SEVERE, null, ex);
+            
+        }
+        
+        return validador;
+    }
+     
+   
     
     
     

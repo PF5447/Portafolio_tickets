@@ -83,74 +83,67 @@ public class FuncionarioServlet extends HttpServlet {
                         out.println("			</div>");
                         out.println("			<div class='form-group'>");
                         out.println("				<p>Perfil</p>");
-                        out.println("				<select name='perfil_administrador'>");
+                        out.println("				<select id='perfil_administrador'>");
                         for (String perfil: perfiles.traerTurnos()) {out.println("<option>"+perfil+"</option>");      }
                         out.println("				</select>");
                         out.println("			</div>");
                         out.println("			<div class='form-group'>");
                         out.println("				<p>Turno</p>");
-                        out.println("				<select name='turno_administrador'>");
+                        out.println("				<select id='turno_administrador'>");
                         for(String turno : turnos.traerTurnos()){out.println("<option>"+turno+"</option>");}
                         out.println("				</select>");
                         out.println("			</div>");
                         out.println("			<div class='form-group'>");
                         out.println("				<p>Sexo</p>");
-                        out.println("				<select name=sexo_administrador>");
+                        out.println("				<select id=sexo_administrador>");
                         out.println("					<option>Masculino</option>");
                         out.println("					<option>Femenino</option>");
                         out.println("				</select>");
                         out.println("			</div>");
                         out.println("			<div class='form-group'>");
                         out.println("				<p>Correo</p>");
-                        out.println("				<input type='email' name='email_administrador'>");
+                        out.println("				<input type='email' id='email_administrador'>");
                         out.println("			</div>");
                         out.println("			<div class='form-group'>");
-                        out.println("				<p>Serie para colacion (id funcionario)</p>");
-                        out.println("				<input type='text' name='id_administrador'>");
+                        out.println("				<p>Serie para colacion (Huella Digital)</p>");
+                        out.println("				<input type='text' id='id_administrador'>");
                         out.println("			</div>");
                         out.println("			<div class='form-group'>");
-                        out.println("				<input class='btn btn-primary' type='submit' id='boton_guardar' value='Guardar'>");
+                        out.println("				<input class='btn btn-primary' type='button' id='boton_guardar' value='Guardar'>");
                         out.println("			</div>");
                         
                         out.println("			<script type='text/javascript'>");
                         out.println(" $(document).ready(function() {			");
-                        out.println("$('#boton_guardar').click(function(event) {			");
+                        out.println("$('#boton_guardar').click(function() {			");
                         out.println("			var rutVar = $('#rut_administrador').val();");
-                        /*
-                        *Felipe tienes que seguir llenando el formulario para ingresar un funcionario
-                        *
-                        *
-                        */
+                        out.println("			var nombreVar = $('#nombre_administrador').val();");
+                        out.println("			var perfilVar = $('#perfil_administrador').val();");
+                        out.println("			var turnoVar = $('#turno_administrador').val();");
+                        out.println("			var sexoVar = $('#sexo_administrador').val();");
+                        out.println("			var emailVar = $('#email_administrador').val();");
+                        out.println("			var idVar = $('#id_administrador').val();");
                         
-                        
-                        out.println("			var passVar = $('#PASS_usuario').val();");
-                        out.println("			var pass2Var = $('#PASS2_usuario').val();");
-                        out.println("			var recuperaVar = $('#CODE_recuperar').val();");
-                        out.println("			var grupoVar = $('#SELECT_grupo').val();");
-                        out.println("			var idFuncionarioVar = $('#id_funcionario').val();");
                         //Comienza if para validar entradas
-                        out.println("			if (userVar===\"\" || passVar===\"\" || pass2Var===\"\" || recuperaVar===\"\" ) {");
+                        out.println("			if (rutVar===\"\" || nombreVar===\"\" || perfilVar===\"\" || turnoVar===\"\" || sexoVar===\"\" || emailVar===\"\" || idVar===\"\" ) {");
                         out.println("			");
                         out.println("			alert(\"Campo Vacio, error! \");");
                         out.println("			 return false;");
-                        out.println("			 }else if(passVar!==pass2Var){");
-                        out.println("			alert(\"Contraseñas no coinciden, error! \");");
-                        out.println("			return false;}");
+                        out.println("			 }");
+                        out.println("			");
+                        out.println("			");
                         out.println("			");
     //termina if
-                        out.println("			 $.get('ServletSumarUsuario', {");
-                        out.println("			 user : userVar,");
-                        out.println("			 pass : passVar,");
-                        out.println("			 recuperar : recuperaVar,");
-                        out.println("			 grupo : grupoVar,");
-                        out.println("			 id_funcionario : idFuncionarioVar");
+                        out.println("			 $.get('ServletSumarFuncionario', {");
+                        out.println("			 rut : rutVar,");
+                        out.println("			 nombre: nombreVar,");
+                        out.println("			 perfil : perfilVar,");
+                        out.println("			 turno : turnoVar,");
+                        out.println("			 sexo : sexoVar,");
+                        out.println("			 email : emailVar,");
+                        out.println("			 id : idVar");
                         out.println("			}, function(responseText) {");
-                        out.println("			       if(responseText===\"true\"){alert('Usuario agregado exitosamente');}else{alert('Usuario no agregado, Funcionario ya Tiene Usuario!');}                        ");
-                        out.println("			                               ");
-                        out.println("			                               ");
-                        out.println("			                               ");
+                        out.println("			       if(responseText===\"true\"){alert('Funcionario agregado exitosamente');}else{alert('Funcionario ya ha sido agregado anteriormente');}                        ");
                         out.println("			});");
-                        out.println("			");
                         out.println("			});");
                         out.println("			});");
                         out.println("			</script>");
