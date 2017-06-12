@@ -67,7 +67,7 @@ public class TotemServlet extends HttpServlet {
                 
                 try (PrintWriter out = response.getWriter()) {                
                     
-                    if (ti_con.agregarTicket(id)) {
+                    if (ti_con.actualizarTicket(id)) {
                         
                         out.println("<p> Funcionario : "+funcionario.getNombre()+"</p>");
                         out.println("<p> Rut         : "+funcionario.getRut()+"</p>");
@@ -87,13 +87,7 @@ public class TotemServlet extends HttpServlet {
                 }            } catch (UnsupportedEncodingException ex) {
                 Logger.getLogger(TotemServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(TotemServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(TotemServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(TotemServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
+        } catch (UnsupportedEncodingException | NoSuchAlgorithmException | ClassNotFoundException | SQLException ex) {
             Logger.getLogger(TotemServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
         
