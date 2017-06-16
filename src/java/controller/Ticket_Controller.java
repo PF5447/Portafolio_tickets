@@ -193,23 +193,28 @@ public class Ticket_Controller {
             
             ConnectionDB conexion = new ConnectionDB();
             
+            
+            FuncionarioController fun_con = new FuncionarioController();
+            Funcionario funcionario = fun_con.retornarFuncionarioID(idFuncionario);
+            
+            //String id_ticket = serie.toString().replace(".","").replace("-","").replace(":","").replace("T","");
             //se genera una serie en base a la fecha y hora actuales
             LocalDateTime serie = LocalDateTime.now().plusHours(1);
-            
             //variable encargada de los rangos de horarios.
             LocalTime now = LocalTime.now().plusHours(1);
             
-            //String id_ticket = serie.toString().replace(".","").replace("-","").replace(":","").replace("T","");
+            String idTicket = retornaIdTicket();
+            String hora_fin = "";
             String status = "GENERADO";
-            String status_1 = "No Canjeado";
-            FuncionarioController fun_con = new FuncionarioController();
-            Funcionario funcionario = fun_con.retornarFuncionarioID(idFuncionario);
             String block_by = funcionario.getRut();
             String created_by = funcionario.getNombre();
+            String status_1 = "No Canjeado";
             String block_datails = "Bloqueo por emision rutinaria";
             String tipo="";
-            String hora_fin = "";
-            
+            String especial_details = "Emision regular";
+            String aditional_details = "Emision regular";
+            String valor = "";
+            String funcionario_id_funcionario = funcionario.getIdFuncionario();
             
             //Rangos de horarios para las minutas.
             if (now.isAfter(LocalTime.of(8, 0, 0)) && now.isBefore(LocalTime.of(10, 0, 0))) {
@@ -228,13 +233,6 @@ public class Ticket_Controller {
                 return false;
             }
                     
-            String especial_details = "Emision regular";
-            String aditional_details = "Emision regular";
-            
-            
-            String funcionario_id_funcionario = funcionario.getIdFuncionario();
-            
-            String valor = "";
             
             switch (funcionario.getPerfil_Id_Perfil()) {
                 case "ADM":
@@ -258,17 +256,18 @@ public class Ticket_Controller {
                 Connection nueva_conexion = conexion.getConnection();
                 
                 
-                String idTicket = retornaIdTicket();
+                
                 //TO_CHAR( SYSDATE, 'HH24:MI:SS' )
                 //TO_CHAR( SYSDATE)
                 String query = "UPDATE TICKET SET "
-                        + "HORA_INICIO = TO_CHAR('HH24:MI:SS'),"
+                        + "HORA_INICIO = TO_CHAR( SYSDATE, 'HH24:MI:SS' ),"
                         + "HORA_FIN    = '"+hora_fin+"',"
                         + "STATUS      = '"+status+"',"
                         + "BLOCK_BY    = '"+block_by+"',"
                         + "CREATED_BY = '"+created_by+"',"
                         + "STATUS_1    = '"+status_1+"',"
                         + "BLOCK_DATE  = TO_CHAR( SYSDATE),"
+                        + "BLOC_DETAILS = '"+block_datails+"',"
                         + "TIPO        = '"+tipo+"',"
                         + "SEPACIAL_DETAILS = '"+especial_details+"',"
                         + "ADITIONAL_DETAILS = '"+aditional_details+"',"
@@ -276,15 +275,15 @@ public class Ticket_Controller {
                         + "FUNCIONARIO_ID_FUNCIONARIO = '"+funcionario_id_funcionario+"'"
                         + "WHERE ID_TICKET = '"+idTicket+"'";
                 System.out.println(query);
+                
                 PreparedStatement ps = nueva_conexion.prepareStatement(query);
-                //ResultSet resultados = consulta.executeQuery(query);
                 ps.executeUpdate();
                 
                 Writer writer = null;
  
                 try {
-                    String impresion = String.format("################## Ticket Pro ################## %nTicket Id=%-20s %nTipo=%-20s %nNombre=%-20s %nValor=%-20s %n################################################","pruebas_format",tipo,funcionario.getNombre(),valor);
-                    File file = new File("D:\\prueba.txt");
+                    String impresion = String.format("################## Ticket Pro ################## %nTicket Id=%-20s %nTipo=%-20s %nNombre=%-20s %nValor=%-20s %n################################################",idTicket,tipo,funcionario.getNombre(),valor);
+                    File file = new File("D:\\"+idTicket+".txt");
                     writer = new BufferedWriter(new FileWriter(file));
                     writer.write(impresion);
                     validador = true;
