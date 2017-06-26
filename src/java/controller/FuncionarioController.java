@@ -41,6 +41,7 @@ public class FuncionarioController {
             PreparedStatement ps = nueva_conexion.prepareStatement(query);
             //ResultSet resultados = consulta.executeQuery(query);
             ps.executeUpdate();
+           validador = true;
             
 //            
 //            while(resultados.next()){
@@ -93,13 +94,13 @@ public boolean eliminarFuncionario(String rut) throws NoSuchAlgorithmException, 
                 
         try {
             
-            Statement consulta = conexion.getConnection().createStatement();
+            
             String query = "DELETE FROM FUNCIONARIO WHERE RUT = "+"'"+rut+"'";
-            ResultSet resultado = consulta.executeQuery(query);
+            PreparedStatement ps = conexion.getConnection().prepareStatement(query);
+            ps.executeUpdate();
+            
             System.out.println(query);
-            while(resultado.next()){
-            result=true;
-            }
+            result = true;
             
           
             

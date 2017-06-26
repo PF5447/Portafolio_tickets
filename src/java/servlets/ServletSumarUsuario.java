@@ -66,6 +66,7 @@ public class ServletSumarUsuario extends HttpServlet {
             String recuperar = request.getParameter("recuperar");
             String grupo = request.getParameter("grupo");
             String funcionario_id_funcionario = request.getParameter("id_funcionario");
+            String estado = request.getParameter("estado");
             UserController usr = new UserController();
             FuncionarioController fun_con = new FuncionarioController();
             Funcionario fun = fun_con.retornarFuncionarioID(funcionario_id_funcionario);
@@ -76,7 +77,7 @@ public class ServletSumarUsuario extends HttpServlet {
             try (PrintWriter out = response.getWriter()) {
                 /* TODO output your page here. You may use following sample code. */
                 
-                if (usr.agregarUser( funcionario_id_funcionario,user, pass, recuperar, grupo, funcionario_id_funcionario)) {
+                if (usr.agregarUser( funcionario_id_funcionario,user, pass, recuperar, grupo, funcionario_id_funcionario,estado)) {
                     
                     
                         MailController mail = new MailController();

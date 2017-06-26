@@ -44,6 +44,14 @@
         <servlet-name>ServletSumarFuncionario</servlet-name>
         <servlet-class>servlets.ServletSumarFuncionario</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ServletEliminarFuncionario</servlet-name>
+        <servlet-class>servlets.ServletEliminarFuncionario</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GestionarFuncionario</servlet-name>
+        <servlet-class>servlets.GestionarFuncionario</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>*.htm</url-pattern>
@@ -79,6 +87,14 @@
     <servlet-mapping>
         <servlet-name>ServletSumarFuncionario</servlet-name>
         <url-pattern>/ServletSumarFuncionario</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ServletEliminarFuncionario</servlet-name>
+        <url-pattern>/ServletEliminarFuncionario</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GestionarFuncionario</servlet-name>
+        <url-pattern>/GestionarFuncionario</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

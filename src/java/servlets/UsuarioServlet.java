@@ -105,6 +105,15 @@ public class UsuarioServlet extends HttpServlet {
                     for (String perfil: gru.traerGrupos()) {out.println("<option>"+perfil+"</option>");      }
                     out.println("				</select>");
                     out.println("			</div>");
+                    
+                    out.println("			<div class='form-group'>");
+                    out.println("				<p>Estado</p>");
+                    out.println("				<select id='SELECT_estado'>");
+                    out.println("<option>ACTIVO</option>");
+                    out.println("<option>INACTIVO</option>");
+                    out.println("				</select>");
+                    out.println("			</div>");
+                    
                     out.println("			<div class='form-group'>");
                     out.println("				<p>ID Funcionario este codigo es usado para cobrar colacion</p>");
                     out.println("				<input type='text' id='id_funcionario' value='"+fun.getIdFuncionario()+"' readonly>");
@@ -112,18 +121,22 @@ public class UsuarioServlet extends HttpServlet {
                     out.println("			<div class='form-group'>");
                     
                     out.println("			</div>");
-                    out.println("			<input class='btn btn-danger' type='button' id='boton_administracion_agregar_user' value='Agregar Usuario'>");
+                    
+                    out.println("			<input class='btn btn-success' type='button' id='boton_administracion_agregar_user' value='Agregar Usuario'>");
+                    out.println("			<img src='img/ajax-loader.gif' id='cargando' >");
                     
                     //Seccion de script que debe enviar datos a servlet para agregar nuevo user por jquery
                     out.println("			<script type='text/javascript'>");
-                    out.println(" $(document).ready(function() {			");
+                    out.println(" $(document).ready(function() {	$('#cargando').hide();		");
                     out.println("$('#boton_administracion_agregar_user').click(function(event) {			");
                     out.println("			var userVar = $('#USER_administrador').val();");
                     out.println("			var passVar = $('#PASS_usuario').val();");
                     out.println("			var pass2Var = $('#PASS2_usuario').val();");
                     out.println("			var recuperaVar = $('#CODE_recuperar').val();");
                     out.println("			var grupoVar = $('#SELECT_grupo').val();");
+                    out.println("			var estado = $('#SELECT_estado').val();");
                     out.println("			var idFuncionarioVar = $('#id_funcionario').val();");
+                    
                     //Comienza if para validar entradas
                     out.println("			if (userVar===\"\" || passVar===\"\" || pass2Var===\"\" || recuperaVar===\"\" ) {");
                     out.println("			");
@@ -133,7 +146,8 @@ public class UsuarioServlet extends HttpServlet {
                     out.println("			alert(\"Contraseñas no coinciden, error! \");");
                     out.println("			return false;}");
                     out.println("			");
-//termina if
+//termina if        
+                    out.println("			$('#cargando').show();");
                     out.println("			 $.get('ServletSumarUsuario', {");
                     out.println("			 user : userVar,");
                     out.println("			 pass : passVar,");
@@ -141,7 +155,7 @@ public class UsuarioServlet extends HttpServlet {
                     out.println("			 grupo : grupoVar,");
                     out.println("			 id_funcionario : idFuncionarioVar");
                     out.println("			}, function(responseText) {");
-                    out.println("			       if(responseText===\"true\"){alert('Usuario agregado exitosamente');}else{alert('Usuario no agregado, Funcionario ya Tiene Usuario!');}                        ");
+                    out.println("			       if(responseText===\"true\"){alert('Usuario agregado exitosamente'); $('#cargando').hide(); }else{alert('Usuario no agregado, Funcionario ya Tiene Usuario!'); $('#cargando').hide();}                        ");
                     out.println("			                               ");
                     out.println("			                               ");
                     out.println("			                               ");

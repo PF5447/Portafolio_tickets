@@ -63,7 +63,7 @@ public class ServletSumarFuncionario extends HttpServlet {
             
             
             if (fun_con.agregarFuncionario(rut, nombre, correo, sexo, idFuncionario, turnos_Id_Turno, perfil_Id_Perfil)) {
-                out.print("true");
+                out.print("agregado");
                 
             }else{
                 out.print("false");

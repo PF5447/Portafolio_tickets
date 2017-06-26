@@ -30,10 +30,7 @@
               <li><a href="Totem.jsp">Modo Totem<span class="sub_icon glyphicon glyphicon-link"></span></a></li>
               <li><a href="verificacion_funcionario.jsp">Personas<span class="sub_icon glyphicon glyphicon-link"></span></a></li>
               <li><a href="gestion_usuarios.jsp">Usuarios<span class="sub_icon glyphicon glyphicon-link"></span></a></li>
-              <li><a>Grupos<span class="sub_icon glyphicon glyphicon-link"></span></a></li>
-              <li><a>Perfiles<span class="sub_icon glyphicon glyphicon-link"></span></a></li>
-              <li><a>Tickets<span class="sub_icon glyphicon glyphicon-link"></span></a></li>
-              <li><a>Turnos<span class="sub_icon glyphicon glyphicon-link"></span></a></li>
+              
                            
             </ul>
       </div>
@@ -47,10 +44,10 @@
 
                  <div class='container'>
 			<div class='form-group'>
-                                <p>Huella digital</p>
-				<input type='text' id='totem_serie'><br>
+                            <h1 class="">Huella digital</h1>
+                                <input class="form-control" type='text' id='totem_serie'><br>
 
-				<input type='button' id='boton_verificacion' value='Imprimir Ticket'>
+                                <input class="btn btn-success" type='button' id='boton_verificacion' value='Imprimir Ticket'>
                                   <script type="text/javascript">
                                     $(document).ready(function() {
                                             $('#boton_verificacion').click(function() {

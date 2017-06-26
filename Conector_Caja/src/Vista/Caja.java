@@ -5,7 +5,20 @@
  */
 package Vista;
 
+import controller.FuncionarioController;
+import controller.ProductoController;
+import controller.Ticket_Controller;
+import java.awt.Color;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import model.Funcionario;
+import model.Producto;
+import model.Ticket;
 
 /**
  *
@@ -19,7 +32,8 @@ public class Caja extends javax.swing.JFrame {
     public Caja() {
         initComponents();
         nombreCajero.setText("Cajero");
-        Funcionario funcionario = new Funcionario();
+       
+        
         
     }
 
@@ -33,28 +47,33 @@ public class Caja extends javax.swing.JFrame {
     private void initComponents() {
 
         jMenu1 = new javax.swing.JMenu();
-        jTextField1 = new javax.swing.JTextField();
+        txtIdTicket = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         nombreCajero = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablaProducto = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        valorT = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
         jPanel1 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
+        totalLbl = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jTextField2 = new javax.swing.JTextField();
+        ProductoIdTxt = new javax.swing.JTextField();
+        btnAddProducto = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        nombreFuncionario = new javax.swing.JLabel();
+        cargoFuncionario = new javax.swing.JLabel();
+        estadoTicket = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
@@ -64,9 +83,9 @@ public class Caja extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        txtIdTicket.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                txtIdTicketActionPerformed(evt);
             }
         });
 
@@ -77,35 +96,32 @@ public class Caja extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Tunga", 0, 24)); // NOI18N
         jLabel4.setText("22:06:17");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tablaProducto.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+
             },
             new String [] {
-                "Producto", "Valor"
+                "Producto", "Valor", "Id Producto"
             }
         ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class
-            };
             boolean[] canEdit = new boolean [] {
-                false, false
+                false, false, false
             };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        tablaProducto.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        tablaProducto.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaProductoMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                tablaProductoMouseEntered(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tablaProducto);
 
         jButton1.setText("Consultar Ticket");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -118,9 +134,9 @@ public class Caja extends javax.swing.JFrame {
 
         jLabel5.setText("Valor TIcket :");
 
-        jLabel6.setFont(new java.awt.Font("Verdana", 1, 24)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(0, 204, 51));
-        jLabel6.setText("4000");
+        valorT.setFont(new java.awt.Font("Verdana", 1, 24)); // NOI18N
+        valorT.setForeground(new java.awt.Color(0, 204, 51));
+        valorT.setText("0");
 
         jLabel7.setText("Nombre:");
 
@@ -130,7 +146,7 @@ public class Caja extends javax.swing.JFrame {
 
         jLabel9.setText("Total :");
 
-        jLabel10.setText("numero");
+        totalLbl.setText("numero");
 
         jButton2.setText("Aceptar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -146,28 +162,42 @@ public class Caja extends javax.swing.JFrame {
             }
         });
 
-        jButton4.setText("Añadir Producto");
+        btnAddProducto.setText("Añadir Producto");
+        btnAddProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddProductoActionPerformed(evt);
+            }
+        });
+
+        jButton4.setText("Borrar Producto");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addComponent(jButton3)
+                .addComponent(jButton4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(90, 90, 90)
+                .addGap(77, 77, 77)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel10))
+                        .addComponent(totalLbl))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(ProductoIdTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnAddProducto)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton3)))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -175,17 +205,20 @@ public class Caja extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4))
+                    .addComponent(ProductoIdTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAddProducto)
+                    .addComponent(jButton3))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
-                    .addComponent(jLabel10))
+                    .addComponent(totalLbl))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
-                    .addComponent(jButton3)))
+                    .addComponent(jButton4)))
         );
+
+        jLabel6.setText("Estado:");
 
         jMenu2.setText("File");
         jMenuBar1.add(jMenu2);
@@ -217,7 +250,7 @@ public class Caja extends javax.swing.JFrame {
                             .addComponent(jLabel4))
                         .addGroup(layout.createSequentialGroup()
                             .addContainerGap()
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtIdTicket, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(layout.createSequentialGroup()
                             .addContainerGap()
                             .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -227,8 +260,18 @@ public class Caja extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel8)
-                            .addComponent(jLabel7)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel7)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(nombreFuncionario))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel8)
+                                    .addComponent(jLabel6))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(estadoTicket)
+                                    .addComponent(cargoFuncionario)))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(34, 34, 34)
                         .addComponent(jLabel3)))
@@ -237,18 +280,20 @@ public class Caja extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 29, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(nombreCajero)
                         .addGap(106, 106, 106)
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel6)
-                        .addGap(58, 58, 58))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addContainerGap())
+                        .addComponent(valorT)
+                        .addGap(68, 68, 68))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE))
+                        .addContainerGap(22, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -263,14 +308,14 @@ public class Caja extends javax.swing.JFrame {
                                     .addComponent(jLabel2)
                                     .addComponent(nombreCajero)
                                     .addComponent(jLabel5)
-                                    .addComponent(jLabel6)))
+                                    .addComponent(valorT)))
                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtIdTicket, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -278,9 +323,17 @@ public class Caja extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel3)
                                 .addGap(18, 18, 18)
-                                .addComponent(jLabel7)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel7)
+                                    .addComponent(nombreFuncionario))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel8))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel8)
+                                    .addComponent(cargoFuncionario))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel6)
+                                    .addComponent(estadoTicket)))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -292,16 +345,73 @@ public class Caja extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void txtIdTicketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdTicketActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_txtIdTicketActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        
+        Ticket_Controller tc = new Ticket_Controller();
+        FuncionarioController fc = new FuncionarioController();
+        String idTicket = txtIdTicket.getText();
+        try {
+            Ticket ticket = tc.devolverTicketPorId(idTicket);
+            Funcionario funcionario = fc.retornarFuncionarioID(ticket.getFuncionario_Id_Funcionario());
+            nombreFuncionario.setText(funcionario.getNombre());
+            cargoFuncionario.setText(funcionario.getPerfil_Id_Perfil());
+            estadoTicket.setText(ticket.getStatus_1());
+            this.valorT.setText(Integer.toString(ticket.getValor()));
+            
+            
+            
+        } catch (SQLException | ClassNotFoundException | NoSuchAlgorithmException | UnsupportedEncodingException ex) {
+            Logger.getLogger(Caja.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        
+        
+        Ticket_Controller tc = new Ticket_Controller();
+        String id = txtIdTicket.getText();
+        Ticket ticket;
+        try {
+            ticket = tc.devolverTicketPorId(id);
+            int total = Integer.parseInt(this.totalLbl.getText());
+            int valorTicket = Integer.parseInt(this.valorT.getText());
+            int diferencia = valorTicket - total;
+            String idProducto;
+            
+            
+            for (int fila=0; fila < this.tablaProducto.getModel().getRowCount(); fila++) {
+            
+            idProducto = (String) this.tablaProducto.getModel().getValueAt(fila, 2);
+                if (tc.cangearTicket(nombreFuncionario.getText(), ticket.getTipo(), diferencia, id, idProducto)) {
+                    if (tc.cambiarStatus(id, ticket.getTipo(), this.nombreCajero.getText())) {
+                        JOptionPane.showMessageDialog(null, "Ticket Cangeado exitosamente!");
+                    }
+                    
+                }else{
+                    JOptionPane.showMessageDialog(null, "Error al cangear");
+                }
+            
+            }
+            
+            
+                    
+                
+        } catch (SQLException | ClassNotFoundException ex) {
+            Logger.getLogger(Caja.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+      
+        
+        
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
@@ -314,6 +424,76 @@ public class Caja extends javax.swing.JFrame {
              
         
     }//GEN-LAST:event_jButton3ActionPerformed
+    
+    int valorProducto = 0;
+    
+    
+    private void btnAddProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddProductoActionPerformed
+        ProductoController pc = new ProductoController();
+        
+        
+        try {
+            
+            Producto producto = pc.getProducto(ProductoIdTxt.getText());
+            DefaultTableModel modelo = (DefaultTableModel) tablaProducto.getModel();
+            String nombre = producto.getNombreProducto();
+            valorProducto = producto.getValorProducto();
+            String idProducto = producto.getIdProducto();
+            Object[] prod = {nombre,valorProducto,idProducto};
+            modelo.addRow(prod);
+            
+            int total = 0;
+            
+            for (int fila=0; fila < modelo.getRowCount(); fila++) {
+            total = (int) modelo.getValueAt(fila, 1) +  total;
+            
+            }
+                      
+            
+            this.totalLbl.setText(Integer.toString(total));
+            
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(Caja.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
+       
+        
+    }//GEN-LAST:event_btnAddProductoActionPerformed
+
+    
+    
+    private void tablaProductoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaProductoMouseClicked
+     
+     
+        
+    }//GEN-LAST:event_tablaProductoMouseClicked
+
+    private void tablaProductoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaProductoMouseEntered
+        
+        
+        
+    }//GEN-LAST:event_tablaProductoMouseEntered
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        try {
+            DefaultTableModel modelo = (DefaultTableModel) tablaProducto.getModel();
+            int itemSelected = tablaProducto.getSelectedRow();
+            int resto = (int) modelo.getValueAt(itemSelected, 1);
+            modelo.removeRow(itemSelected);
+            int total = Integer.parseInt( totalLbl.getText());
+            int resultado = total - resto;
+            this.totalLbl.setText(Integer.toString(resultado));
+            
+            //totalLbl.setText(Integer.toString(total));
+            //valorT.setText(Integer.toHexString(valor_ticket));
+            
+        } catch (Exception e) {
+        
+            JOptionPane.showMessageDialog(null, "No ha Seleccionado un elemento");
+        }
+        
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -351,12 +531,15 @@ public class Caja extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField ProductoIdTxt;
+    private javax.swing.JButton btnAddProducto;
+    private javax.swing.JLabel cargoFuncionario;
+    private javax.swing.JLabel estadoTicket;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -374,9 +557,11 @@ public class Caja extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     public javax.swing.JLabel nombreCajero;
+    private javax.swing.JLabel nombreFuncionario;
+    private javax.swing.JTable tablaProducto;
+    private javax.swing.JLabel totalLbl;
+    private javax.swing.JTextField txtIdTicket;
+    private javax.swing.JLabel valorT;
     // End of variables declaration//GEN-END:variables
 }

@@ -30,10 +30,7 @@
                 <li><a href="Totem.jsp">Modo Totem<span class="sub_icon glyphicon glyphicon-link"></span></a></li>
               <li><a href="verificacion_funcionario.jsp">Personas<span class="sub_icon glyphicon glyphicon-link"></span></a></li>
               <li><a href="gestion_usuarios.jsp">Usuarios<span class="sub_icon glyphicon glyphicon-link"></span></a></li>
-              <li><a>Grupos<span class="sub_icon glyphicon glyphicon-link"></span></a></li>
-              <li><a>Perfiles<span class="sub_icon glyphicon glyphicon-link"></span></a></li>
-              <li><a>Tickets<span class="sub_icon glyphicon glyphicon-link"></span></a></li>
-              <li><a>Turnos<span class="sub_icon glyphicon glyphicon-link"></span></a></li>
+
                            
             </ul>
       </div>
@@ -51,14 +48,14 @@
                     <br>
                 </div>
 		<hr>
-		<h2>Gestion de funcionarios</h2>
+		<h3>Gestion de funcionarios</h3>
 		<div class='container'>
 			<div class='form-group'>
 				
-                            <input type='text' class='entrada_fun' id='rut_administrador' placeholder="Formato xxxxxxxx-x" required>
-                         
+                            <input type='text' class="form-control" id='rut_administrador' placeholder="Formato xxxxxxxx-x" required>
+                            <br>
                            
-                            <input type='button' class='boton_fun' id='boton_verificacion' value='Verificar Disponibilidad'>
+                            <input type='button' class="btn btn-success" id='boton_verificacion' value='Verificar Disponibilidad'>
                              
                              <div id='tabla'></div>
                             <script type="text/javascript">
@@ -78,7 +75,34 @@
 
                                                     }, function(responseText) {
                                                         if (responseText==="rut_existe") {
-                                                               alert('Rut ya se encuentra'); 
+                                                   
+                                                           if (confirm('funcionario ya existe, desea gestionarlo?')) {
+                                                               $.get(
+                                                                   'GestionarFuncionario',
+                                                                    {rut:nombreVar},
+                                                                    function(respuesta){
+                                                                        if(respuesta==='error'){
+                                                                            alert('error');
+                                                                        }else{
+                                                                            $("#tabla").html(respuesta);
+                                                                        }
+                                                                        
+                                                                        
+                                                                        
+                                                                    }
+                    
+                                                                );
+                                                               
+                                                               
+                                                           }else{
+                                                               alert('Respondio NO');
+                                                               
+                                                           }
+    
+
+                                                               
+                                                               
+                                                               
                                                         }else if(responseText==="formato_error"){
                                                                 alert('Rut No tiene formato válido');
                                                         }else{

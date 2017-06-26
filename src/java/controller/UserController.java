@@ -24,7 +24,7 @@ import model.Usuario;
 public class UserController {
     
     public boolean agregarUser(String id_user,String USER,String PASS,String CODIGO
-    ,String GRUPO_ID_GRUPO,String FUNCIONARIO_ID_FUNCIONARIO) throws NoSuchAlgorithmException, UnsupportedEncodingException, ClassNotFoundException, SQLException{
+    ,String GRUPO_ID_GRUPO,String FUNCIONARIO_ID_FUNCIONARIO,String ESTADO) throws NoSuchAlgorithmException, UnsupportedEncodingException, ClassNotFoundException, SQLException{
         
    
         
@@ -41,12 +41,12 @@ public class UserController {
         try {
             Connection nueva_conexion = conexion.getConnection();
             //Statement consulta = nueva_conexion.createStatement();
-            String query = "insert into USUARIO VALUES('"+id_user+"','"+USER+"','"+PASS+"','"+CODIGO+"','"+GRUPO_ID_GRUPO+"','"+FUNCIONARIO_ID_FUNCIONARIO+"')";
+            String query = "insert into USUARIO VALUES('"+id_user+"','"+USER+"','"+PASS+"','"+CODIGO+"','"+GRUPO_ID_GRUPO+"','"+FUNCIONARIO_ID_FUNCIONARIO+"','"+ESTADO+"')";
             System.out.println(query);
             PreparedStatement ps = nueva_conexion.prepareStatement(query);
             //ResultSet resultados = consulta.executeQuery(query);
             ps.executeUpdate();
-           
+            validador = true;
             
         } catch (ClassNotFoundException | SQLException ex) {
             ex.printStackTrace();
@@ -114,21 +114,19 @@ public class UserController {
         
         ConnectionDB conexion = new ConnectionDB();
         
+        
        boolean result=false; 
                 
         try {
             
-            Statement consulta = conexion.getConnection().createStatement();
             String query = "DELETE FROM USUARIO WHERE ID_USUARIO = "+"'"+id+"'";
-            ResultSet resultado = consulta.executeQuery(query);
+            PreparedStatement ps = conexion.getConnection().prepareStatement(query);
+            ps.executeUpdate();
             System.out.println(query);
-            while(resultado.next()){
-            result=true;
-            }
-            
+            result = true;
           
             
-        } catch (ClassNotFoundException | SQLException ex) {
+        } catch (SQLException ex) {
             
             ex.printStackTrace();
             

@@ -27,10 +27,7 @@
               <li><a href="Totem.jsp">Modo Totem<span class="sub_icon glyphicon glyphicon-link"></span></a></li>
               <li><a href="verificacion_funcionario.jsp">Personas<span class="sub_icon glyphicon glyphicon-link"></span></a></li>
               <li><a href="gestion_usuarios.jsp">Usuarios<span class="sub_icon glyphicon glyphicon-link"></span></a></li>
-              <li><a>Grupos<span class="sub_icon glyphicon glyphicon-link"></span></a></li>
-              <li><a>Perfiles<span class="sub_icon glyphicon glyphicon-link"></span></a></li>
-              <li><a>Tickets<span class="sub_icon glyphicon glyphicon-link"></span></a></li>
-              <li><a>Turnos<span class="sub_icon glyphicon glyphicon-link"></span></a></li>
+        
                            
             </ul>
       </div>
@@ -49,9 +46,10 @@
 		<div class='container'>
 			<div class='form-group'>
                             	
-                            <p id="p_rut_funcionario">Rut funcionario</p>
-                                <input type='text' id='rut_administrador_user' placeholder="ingrese un RUT" required>
-                                <input type='button' id='user_verificacion' value='Buscar Funcionario' placeholder="rut funcionario">
+                            <h3 id="p_rut_funcionario">Rut funcionario</h3>
+                                <input class="form-control" type='text' id='rut_administrador_user' placeholder="ingrese un RUT" required>
+                                <br>
+                                <input class="btn btn-success" type='button' id='user_verificacion' value='Buscar Funcionario' placeholder="rut funcionario">
                                
                                 <script type="text/javascript">
                                     $(document).ready(function() {
@@ -83,7 +81,7 @@
                                             });
                                     });
                                 </script>
-                                <input type='button' id='user_delete' value='Eliminar Usuario'>
+                                <input class="btn btn-danger" type='button' id='user_delete' value='Eliminar Usuario'>
                                 
                                     <script type="text/javascript">
                                                                     
@@ -98,9 +96,13 @@
                                                     $.get('EliminarUsuario', {
                                                             id : nombreVar
 
-                                                    }, function(responseText) {
-                                                           
-                                                            $('#tabla').html(responseText);
+                                                    }, function(respuesta) {
+                                                           if(respuesta==="eliminado"){
+                                                               alert('usuario eliminado');
+                                                           }else{
+                                                               alert('usuario no existe en los registros');
+                                                           }
+                                                            
                                                     });
                                             });
                                     });

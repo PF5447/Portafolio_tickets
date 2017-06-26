@@ -26,7 +26,7 @@ import model.Funcionario;
  *
  * @author bcn
  */
-public class FuncionarioServlet extends HttpServlet {
+public class GestionarFuncionario extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -53,16 +53,15 @@ public class FuncionarioServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-        protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, UnsupportedEncodingException {
         
             String rut = request.getParameter("rut");
             rut = rut.replace(".","");
             System.out.println(rut);
-            PerfilController perfiles = new  PerfilController();
-            TurnoController turnos = new TurnoController();
             Validador valida_rut = new Validador();
             FuncionarioController controlador_funcionario = new FuncionarioController();
+        
             try (PrintWriter out = response.getWriter()) {
                 
                 
@@ -70,51 +69,50 @@ public class FuncionarioServlet extends HttpServlet {
                     
                     /* TODO output your page here. You may use following sample code. */
                     if(controlador_funcionario.validarFuncionario(rut)){
-                        out.print("rut_existe");
-                    }else {
-                        out.println("<p>El funcionario no esta enrolado, puede crear uno en el siguiente formulario</p>");
-                        
-                        out.println("				<p>Rut</p>");
-                        out.println("				<input type='text' id='rut_administrador' value='"+rut+"' readonly>");
+                       
+                        Funcionario  funcionario = controlador_funcionario.retornarFuncionario(rut);
+                        out.println("<p>Gestion de Funcionrio</p>");
+                        out.println("			<p>Rut</p>");
+                        out.println("                   <input type='text' id='rut_administrador' value='"+rut+"' readonly>");
                         out.println("			</div>");
                         out.println("			<div class='form-group'>");
                         out.println("				<p>Nombre</p>");
-                        out.println("				<input type='text' id='nombre_administrador'>");
+                        out.println("				<input type='text' id='nombre_administrador' value='"+funcionario.getNombre()+"'>");
                         out.println("			</div>");
                         out.println("			<div class='form-group'>");
                         out.println("				<p>Perfil</p>");
-                        out.println("				<select id='perfil_administrador'>");
-                        for (String perfil: perfiles.traerTurnos()) {out.println("<option>"+perfil+"</option>");      }
+                        out.println("				<select id='perfil_administrador' >");
+                        out.println("<option>"+funcionario.getPerfil_Id_Perfil()+"</option>");      
                         out.println("				</select>");
                         out.println("			</div>");
                         out.println("			<div class='form-group'>");
                         out.println("				<p>Turno</p>");
                         out.println("				<select id='turno_administrador'>");
-                        for(String turno : turnos.traerTurnos()){out.println("<option>"+turno+"</option>");}
+                        out.println("<option>"+funcionario.getTurnos_Id_Turnos()+"</option>");
                         out.println("				</select>");
                         out.println("			</div>");
                         out.println("			<div class='form-group'>");
                         out.println("				<p>Sexo</p>");
                         out.println("				<select id=sexo_administrador>");
-                        out.println("					<option>Masculino</option>");
-                        out.println("					<option>Femenino</option>");
+                        out.println("					<option>"+funcionario.getSexo()+"</option>");
                         out.println("				</select>");
                         out.println("			</div>");
                         out.println("			<div class='form-group'>");
                         out.println("				<p>Correo</p>");
-                        out.println("				<input type='email' id='email_administrador'>");
+                        out.println("				<input type='email' id='email_administrador' value='"+funcionario.getCorreo()+"'>");
                         out.println("			</div>");
                         out.println("			<div class='form-group'>");
                         out.println("				<p>Serie para colacion (Huella Digital)</p>");
-                        out.println("				<input type='text' id='id_administrador'>");
+                        out.println("				<input type='text' id='id_administrador'value='"+funcionario.getIdFuncionario()+"'>");
                         out.println("			</div>");
                         out.println("			<div class='form-group'>");
-                        out.println("				<input class='btn btn-primary' type='button' id='boton_guardar' value='Guardar'>");
+                        out.println("				<input class='btn btn-danger' type='button' id='boton_eliminar' value='Eliminar'>");
+                        out.println("				<input class='btn btn-warning' type='button' id='boton_guardar' value='Modificar'>");                                        
                         out.println("			</div>");
                         
                         out.println("			<script type='text/javascript'>");
                         out.println(" $(document).ready(function() {			");
-                        out.println("$('#boton_guardar').click(function() {			");
+                        out.println("$('#boton_eliminar').click(function() {			");
                         out.println("			var rutVar = $('#rut_administrador').val();");
                         out.println("			var nombreVar = $('#nombre_administrador').val();");
                         out.println("			var perfilVar = $('#perfil_administrador').val();");
@@ -133,7 +131,7 @@ public class FuncionarioServlet extends HttpServlet {
                         out.println("			");
                         out.println("			");
     //termina if
-                        out.println("			 $.get('ServletSumarFuncionario', {");
+                        out.println("			 $.get('ServletEliminarFuncionario', {");
                         out.println("			 rut : rutVar,");
                         out.println("			 nombre: nombreVar,");
                         out.println("			 perfil : perfilVar,");
@@ -142,13 +140,16 @@ public class FuncionarioServlet extends HttpServlet {
                         out.println("			 email : emailVar,");
                         out.println("			 id : idVar");
                         out.println("			}, function(responseText) {");
-                        out.println("			       if(responseText===\"agregado\"){alert('Funcionario agregado exitosamente'); location.reload(); }else{alert(responseText);}                        ");
+                        out.println("			       if(responseText===\"eliminado\"){alert('Funcionario eliminado exitosamente'); location.reload();}else{alert('Funcionario no eliminado');}                        ");
                         out.println("			});");
                         out.println("			});");
                         out.println("			});");
                         out.println("			</script>");
 
                         out.println("		</div>");
+                        
+                    }else {
+                        out.print("error");
                         
                     }
                     //  out.println("<h1>Servlet FuncionarioServlet soy el servlet " + request.getContextPath() + "</h1>");
@@ -158,13 +159,12 @@ public class FuncionarioServlet extends HttpServlet {
                     out.print("formato_error");
                 }
                 
-                
-                
-                
-            } catch (NoSuchAlgorithmException | UnsupportedEncodingException | ClassNotFoundException | SQLException ex) {
-                Logger.getLogger(FuncionarioServlet.class.getName()).log(Level.SEVERE, null, ex);
-            }
-    }
+        
+        
+        
+    }   catch (NoSuchAlgorithmException | ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(GestionarFuncionario.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -174,20 +174,28 @@ public class FuncionarioServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        
-    }
+ 
+
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+ 
 
     /**
      * Returns a short description of the servlet.
      *
      * @return a String containing servlet description
      */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
 
+    }
 }
